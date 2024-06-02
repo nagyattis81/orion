@@ -48,6 +48,16 @@ else ()
 endif ()
 
 
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/bass)
+if (WIN32)
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/bass/bass.lib)
+elseif (APPLE)
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/bass/libbass.dylib)
+else ()
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/bass/libbass.so)
+endif ()
+
+
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/glad/include)
 file(GLOB_RECURSE LIBS_GLAD_SRC "libs/glad/src/glad.c")
 set(LIBS_SRC ${LIBS_SRC} ${LIBS_GLAD_SRC})

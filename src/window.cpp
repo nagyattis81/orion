@@ -81,9 +81,10 @@ bool Window::Create(const char *title, unsigned int width, unsigned int height,
     return false;
   }
 
-  std::cout << "GL_VENDOR   : " << glGetString(GL_VENDOR) << std::endl;
-  std::cout << "GL_RENDERER : " << glGetString(GL_RENDERER) << std::endl;
-  std::cout << "GL_VERSION  : " << glGetString(GL_VERSION) << std::endl;
+  std::cout << "GLFW_WINDOW  " << width << " x " << height << std::endl;
+  std::cout << "GL_VENDOR    " << glGetString(GL_VENDOR) << std::endl;
+  std::cout << "GL_RENDERER  " << glGetString(GL_RENDERER) << std::endl;
+  std::cout << "GL_VERSION   " << glGetString(GL_VERSION) << std::endl;
 
   return true;
 }
