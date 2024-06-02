@@ -48,6 +48,13 @@ else ()
 endif ()
 
 
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/glad/include)
+file(GLOB_RECURSE LIBS_GLAD_SRC "libs/glad/src/glad.c")
+set(LIBS_SRC ${LIBS_SRC} ${LIBS_GLAD_SRC})
+source_group("Library Files\\glad" FILES ${LIBS_GLAD_SRC})
+set(COMMON_SRC ${COMMON_SRC} ${LIBS_SRC})
+
+
 set(DEMO_EXE "demo")
 file(GLOB_RECURSE DEMO_SRC src/*.cpp)
 set(DEMO_APP_SRC ${COMMON_SRC} ${DEMO_SRC})

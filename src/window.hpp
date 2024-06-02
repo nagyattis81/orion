@@ -16,6 +16,7 @@ public:
   bool Open() const;
   void SwapBuffers() const;
   void PollEvents() const;
+  double GetTime() const;
 
 private:
   inline static Window *instance = nullptr;

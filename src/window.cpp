@@ -1,3 +1,5 @@
+#include <glad/glad.h>
+
 #include "window.hpp"
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -50,6 +52,10 @@ bool Window::Create(const char *title, unsigned int width, unsigned int height,
     height = mode->height;
   }
 
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
   window = glfwCreateWindow(width, height, title,
                             isFullscreen ? monitor : nullptr, nullptr);
@@ -68,6 +74,17 @@ bool Window::Create(const char *title, unsigned int width, unsigned int height,
   glfwSetKeyCallback(window, callbackKey);
   glfwMakeContextCurrent(window);
   glfwSwapInterval(vsync == Vsync::ON ? 1 : 0);
+
+  int version = gladLoadGL();
+  if (version == 0) {
+    std::cerr << "GLAD init error!";
+    return false;
+  }
+
+  std::cout << "GL_VENDOR   : " << glGetString(GL_VENDOR) << std::endl;
+  std::cout << "GL_RENDERER : " << glGetString(GL_RENDERER) << std::endl;
+  std::cout << "GL_VERSION  : " << glGetString(GL_VERSION) << std::endl;
+
   return true;
 }
 
@@ -83,3 +100,5 @@ void Window::SwapBuffers() const {
 }
 
 void Window::PollEvents() const { glfwPollEvents(); }
+
+double Window::GetTime() const { return glfwGetTime(); }
