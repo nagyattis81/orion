@@ -1,0 +1,46 @@
+#include "vao.hpp"
+
+VAO::~VAO() {
+  if (id != GL_NONE)
+    glDeleteVertexArrays(1, &id);
+  id = GL_NONE;
+}
+
+bool VAO::Create(std::function<GLsizei(void)> create) {
+  if (id != GL_NONE)
+    return false;
+
+  glGenVertexArrays(1, &id);
+  if (id == GL_NONE)
+    return false;
+  glBindVertexArray(id);
+
+  count = create();
+
+  glBindVertexArray(GL_NONE);
+  return count > 0;
+}
+
+void VAO::DrawArrays(const GLenum mode) const {
+  if (id == GL_NONE || count == 0)
+    return;
+  glBindVertexArray(id);
+  glDrawArrays(mode, 0, count);
+  glBindVertexArray(GL_NONE);
+}
+
+void VAO::DrawElements(const GLenum mode) const {
+  if (id == GL_NONE || count == 0)
+    return;
+  glBindVertexArray(id);
+  glDrawElements(mode, count, GL_UNSIGNED_INT, 0);
+  glBindVertexArray(GL_NONE);
+}
+
+void VAO::VertexAttrib(const GLuint index, const GLint size, const GLenum type,
+                       const GLboolean normalized, const GLsizei stride,
+                       const GLsizei offset) {
+  glVertexAttribPointer(index, size, type, normalized, stride,
+                        ((char *)nullptr + (offset)));
+  glEnableVertexAttribArray(index);
+}

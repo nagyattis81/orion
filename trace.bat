@@ -1,0 +1,1 @@
+apitrace trace --output=./out/demo.trace ./out/Release/demo.exe

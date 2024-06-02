@@ -57,6 +57,12 @@ else ()
 	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/bass/libbass.so)
 endif ()
 
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/stb)
+
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/glm/)
+
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/spdlog/include)
+
 
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/glad/include)
 file(GLOB_RECURSE LIBS_GLAD_SRC "libs/glad/src/glad.c")
@@ -72,3 +78,4 @@ set(DEMO_APP_SRC ${COMMON_SRC} ${DEMO_SRC})
 add_executable(${DEMO_EXE} ${DEMO_APP_SRC})
 target_include_directories(${DEMO_EXE} PUBLIC ${COMMON_INCLUDES})
 target_link_libraries(${DEMO_EXE} ${COMMON_LIBS})
+set_property(TARGET ${DEMO_EXE} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "..")
