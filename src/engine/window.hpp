@@ -11,6 +11,7 @@ public:
     const char *title = nullptr;
     bool fullscreen = false;
     bool vsync = true;
+    unsigned char samples = 0;
   };
 
   bool Create(const Parameters &parameters);
@@ -19,6 +20,7 @@ public:
   void SwapBuffers() const;
   void PollEvents() const;
   double GetTime() const;
+  void SetWindowTitle(const char *title);
 
 private:
   inline static Window *instance = nullptr;

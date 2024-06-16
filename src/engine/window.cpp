@@ -57,6 +57,8 @@ bool Window::Create(const Parameters &parameters) {
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+  if (parameters.samples > 0)
+    glfwWindowHint(GLFW_SAMPLES, parameters.samples);
   window = glfwCreateWindow(width, height, parameters.title,
                             parameters.fullscreen ? monitor : nullptr, nullptr);
   if (!window) {
@@ -86,6 +88,9 @@ bool Window::Create(const Parameters &parameters) {
   spdlog::info("GL_RENDERER {0}", (const char *)(glGetString(GL_RENDERER)));
   spdlog::info("GL_VERSION  {0}", (const char *)(glGetString(GL_VERSION)));
 
+  if (parameters.samples > 0)
+    glEnable(GL_MULTISAMPLE);
+
   return true;
 }
 
@@ -103,3 +108,8 @@ void Window::SwapBuffers() const {
 void Window::PollEvents() const { glfwPollEvents(); }
 
 double Window::GetTime() const { return glfwGetTime(); }
+
+void Window::SetWindowTitle(const char *title) {
+  if (window && title)
+    glfwSetWindowTitle(window, title);
+}

@@ -6,6 +6,8 @@
 #include "vao.hpp"
 #include <glm/mat4x4.hpp>
 
+using namespace glm;
+
 class Camera;
 
 class Sprite {
@@ -24,6 +26,6 @@ private:
 
 public:
   bool Load(const Texture2D::Parameters &parameters);
-  void Render(const Camera &camera, const glm::mat4 &transformation,
-              const glm::vec4 &color) const;
+  void Render(const Camera &camera, const mat4 &transformation,
+              const vec4 &color) const;
 };

@@ -43,7 +43,7 @@ bool Texture2D::Load(const Parameters &parameters) {
 
   stbi_image_free(data);
 
-  size = glm::ivec2(width, height);
+  size = ivec2(width, height);
 
   return true;
 }
@@ -64,4 +64,4 @@ void Texture2D::UnBind() const {
   glBindTexture(GL_TEXTURE_2D, GL_NONE);
 }
 
-glm::ivec2 Texture2D::GetSize() const { return size; }
+ivec2 Texture2D::GetSize() const { return size; }

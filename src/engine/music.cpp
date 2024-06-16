@@ -66,3 +66,8 @@ double Music::GetTime() const {
   return BASS_ChannelBytes2Seconds(
       handle, BASS_ChannelGetPosition(handle, BASS_POS_BYTE));
 }
+
+void Music::SetTime(const double time) {
+  BASS_ChannelSetPosition(handle, BASS_ChannelSeconds2Bytes(handle, time),
+                          BASS_POS_BYTE);
+}

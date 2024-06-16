@@ -2,14 +2,21 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-void Camera::Ortho(const float width, const float height) {
-  projection = glm::ortho(0.0f, width, height, 0.0f, 0.0f, 100.0f);
+void Camera::Ortho(const ivec2 &size) {
+  projection = ortho(0.0f, static_cast<float>(size.x),
+                     static_cast<float>(size.y), 0.0f, 0.0f, 100.0f);
 }
 
-const float *Camera::View() const { return glm::value_ptr(view); }
-const float *Camera::Projection() const { return glm::value_ptr(projection); }
-
-const float *Camera::VP() const {
-  static const auto vp = projection * view;
-  return glm::value_ptr(vp);
+void Camera::Perspective(const float fovy, const float aspect,
+                         const float zNear, const float zFar) {
+  projection = perspective(glm::radians(fovy), aspect, zNear, zFar);
 }
+
+void Camera::LookAt(const vec3 &eye, const vec3 &center, const vec3 &up) {
+  view = lookAt(eye, center, up);
+}
+
+const float *Camera::View() const { return value_ptr(view); }
+const float *Camera::Projection() const { return value_ptr(projection); }
+
+mat4 Camera::MVP(const mat4 &model) const { return projection * view * model; }

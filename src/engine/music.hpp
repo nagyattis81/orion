@@ -13,6 +13,7 @@ public:
   bool Load(const Parameters &parameters);
   void Play();
   double GetTime() const;
+  void SetTime(const double time);
 
 private:
   inline static Music *instance = nullptr;

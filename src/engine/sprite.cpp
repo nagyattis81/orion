@@ -28,25 +28,22 @@ bool Sprite::InitProgram() {
 bool Sprite::InitVAO() {
   const auto creator = [=]() -> GLsizei {
     struct Vertex {
-      glm::vec2 pos = glm::vec2(0.0f);
-      glm::vec2 uv = glm::vec2(0.0f);
+      vec2 pos = vec2(0.0f);
+      vec2 uv = vec2(0.0f);
     };
     static const GLsizei STRIDE = sizeof(Vertex);
 
-    const auto size = texture.GetSize();
+    const vec2 half = vec2(texture.GetSize()) * vec2(0.5f);
 
-    const auto halfWidth = size.x / 2.0f;
-    const auto halfHeight = size.y / 2.0f;
+    const float left = -half.x;
+    const float right = half.x;
+    const float top = half.y;
+    const float bottom = -half.y;
 
-    const float left = -halfWidth;
-    const float right = halfWidth;
-    const float top = halfHeight;
-    const float bottom = -halfHeight;
-
-    static const glm::vec2 leftTop(0.0f, 1.0f);
-    static const glm::vec2 rightTop(1.0f, 1.0f);
-    static const glm::vec2 rightBottom(1.0f, 0.0f);
-    static const glm::vec2 leftBottom(0.0f, 0.0f);
+    static const vec2 leftTop(0.0f, 1.0f);
+    static const vec2 rightTop(1.0f, 1.0f);
+    static const vec2 rightBottom(1.0f, 0.0f);
+    static const vec2 leftBottom(0.0f, 0.0f);
 
     const Vertex vertices[6] = {
         {{left, bottom}, leftBottom}, {{left, top}, leftTop},
@@ -55,7 +52,7 @@ bool Sprite::InitVAO() {
     if (!vbo.Create(sizeof(vertices), vertices))
       return 0;
     vao.VertexAttrib(0, 2, GL_FLOAT, GL_FALSE, STRIDE, 0);
-    vao.VertexAttrib(1, 2, GL_FLOAT, GL_TRUE, STRIDE, sizeof(glm::vec2));
+    vao.VertexAttrib(1, 2, GL_FLOAT, GL_TRUE, STRIDE, sizeof(vec2));
     vbo.UnBind();
     return 6;
   };
@@ -74,8 +71,8 @@ bool Sprite::Load(const Texture2D::Parameters &parameters) {
   return true;
 }
 
-void Sprite::Render(const Camera &camera, const glm::mat4 &transformation,
-                    const glm::vec4 &color) const {
+void Sprite::Render(const Camera &camera, const mat4 &transformation,
+                    const vec4 &color) const {
   program.Bind();
   glUniformMatrix4fv(modelViewLocation, 1, GL_FALSE, &transformation[0][0]);
   glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, camera.Projection());

@@ -1,23 +1,18 @@
 #pragma once
 
+#include "engine/fade.hpp"
 #include "engine/sprite.hpp"
 #include <map>
 
+using namespace glm;
+
 struct Part;
 
-class Demo {
-private:
-  std::map<double, Part *> parts;
-
-  bool InitParts();
-
-public:
+struct Demo {
   Sprite logo;
+  Fade fade;
 
-  inline static const int WIDTH = 1920;
-  inline static const int HEIGHT = 1080;
-
-  Demo();
+  std::map<double, Part *> CreateParts();
   bool Init();
-  bool Render(const double time);
+  void Render(const double time);
 };
