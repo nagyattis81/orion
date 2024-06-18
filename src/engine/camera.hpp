@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glad/glad.h>
+
 #include <glm/mat4x4.hpp>
 
 using namespace glm;
@@ -15,7 +17,8 @@ public:
                    const float zFar);
   void LookAt(const vec3 &eye, const vec3 &center, const vec3 &up);
 
-  const float *View() const;
-  const float *Projection() const;
-  mat4 MVP(const mat4 &model) const;
+  void UniformProjection(const GLint location) const;
+  void UniformMVP(const GLint location, const mat4 &model) const;
+  void UniformNormal(const GLint location, const mat4 &model) const;
+  void UniformModelView(const GLint location, const mat4 &model) const;
 };

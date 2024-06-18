@@ -26,7 +26,7 @@ bool Sprite::InitProgram() {
 }
 
 bool Sprite::InitVAO() {
-  const auto creator = [=]() -> GLsizei {
+  const auto creator = [this]() -> GLsizei {
     struct Vertex {
       vec2 pos = vec2(0.0f);
       vec2 uv = vec2(0.0f);
@@ -71,11 +71,11 @@ bool Sprite::Load(const Texture2D::Parameters &parameters) {
   return true;
 }
 
-void Sprite::Render(const Camera &camera, const mat4 &transformation,
+void Sprite::Render(const Camera &camera, const mat4 &modelMatrix,
                     const vec4 &color) const {
   program.Bind();
-  glUniformMatrix4fv(modelViewLocation, 1, GL_FALSE, &transformation[0][0]);
-  glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, camera.Projection());
+  camera.UniformModelView(modelViewLocation, modelMatrix);
+  camera.UniformProjection(projectionLocation);
   glUniform4fv(colorLocation, 1, &color.r);
   texture.Bind(GL_TEXTURE0);
   vao.DrawArrays(GL_TRIANGLES);

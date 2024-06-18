@@ -58,17 +58,24 @@ else ()
 endif ()
 
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/stb)
-
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/glm/)
-
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/spdlog/include)
-
 
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/glad/include)
 file(GLOB_RECURSE LIBS_GLAD_SRC "libs/glad/src/glad.c")
 set(LIBS_SRC ${LIBS_SRC} ${LIBS_GLAD_SRC})
 source_group("Library Files\\glad" FILES ${LIBS_GLAD_SRC})
 set(COMMON_SRC ${COMMON_SRC} ${LIBS_SRC})
+
+
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/assimp/include)
+if (WIN32)
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/assimp/assimp-vc143-mt.lib)
+elseif (APPLE)
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/assimp/libassimp.5.dylib)
+else ()
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/assimp/libassimp.so.5)
+endif ()
 
 
 set(DEMO_EXE "demo")

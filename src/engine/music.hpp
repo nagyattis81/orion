@@ -12,6 +12,7 @@ public:
 
   bool Load(const Parameters &parameters);
   void Play();
+  void Stop();
   double GetTime() const;
   void SetTime(const double time);
 

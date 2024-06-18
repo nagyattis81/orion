@@ -1,7 +1,7 @@
 #include "spdlog/spdlog.h"
-
 #include <glad/glad.h>
 
+#include "music.hpp"
 #include "window.hpp"
 #include <GLFW/glfw3.h>
 
@@ -20,6 +20,14 @@ Window::~Window() {
 static void callbackKey(GLFWwindow *window, int key, int, int action, int) {
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     glfwSetWindowShouldClose(window, GLFW_TRUE);
+  if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+    static bool play = true;
+    play = !play;
+    if (play)
+      Music::Instance()->Play();
+    else
+      Music::Instance()->Stop();
+  }
 }
 
 bool Window::Create(const Parameters &parameters) {

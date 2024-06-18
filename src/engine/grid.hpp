@@ -1,6 +1,7 @@
 #pragma once
 
 #include "buffers.hpp"
+#include "color.hpp"
 #include "program.hpp"
 #include "vao.hpp"
 #include <glm/mat4x4.hpp>
@@ -22,7 +23,8 @@ public:
     unsigned int count = 10;
     bool normals = false;
     unsigned int thickening = 5;
+    const vec3 color = Color::GREEN;
   };
   bool Init(const Parameters &parameters);
-  void Render(const Camera &camera, const mat4 &model = mat4(1.0f));
+  void Render(const Camera &camera, const mat4 &modelMatrix = mat4(1.0f));
 };

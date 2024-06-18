@@ -1,10 +1,15 @@
 #pragma once
 
 #include <glad/glad.h>
+#include <string>
+
+using namespace std;
 
 class Program {
 private:
   GLuint id = GL_NONE;
+  string vsPath = "";
+  string fsPath = "";
 
 public:
   ~Program();

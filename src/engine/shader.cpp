@@ -4,6 +4,8 @@
 #include <fstream>
 #include <sstream>
 
+using namespace std;
+
 Shader::~Shader() {
   if (id == GL_NONE)
     return;
@@ -11,12 +13,12 @@ Shader::~Shader() {
 }
 
 bool Shader::Load(const char *path, const GLenum type) {
-  std::ifstream file(path);
+  ifstream file(path);
   if (!file) {
     spdlog::critical("file load error: {}", path);
     return false;
   }
-  file.ignore(std::numeric_limits<std::streamsize>::max());
+  file.ignore(numeric_limits<streamsize>::max());
   auto size = file.gcount();
   if (size > 0x10000) {
     spdlog::critical("file load error size limit: {}", path);
@@ -24,8 +26,8 @@ bool Shader::Load(const char *path, const GLenum type) {
   }
 
   file.clear();
-  file.seekg(0, std::ios_base::beg);
-  std::stringstream sstr;
+  file.seekg(0, ios_base::beg);
+  stringstream sstr;
   sstr << file.rdbuf();
   file.close();
 
@@ -54,7 +56,7 @@ bool Shader::Load(const char *path, const GLenum type) {
     if (infoLogLength > 0) {
       GLchar *info = new GLchar[infoLogLength + 1];
       glGetShaderInfoLog(id, infoLogLength, nullptr, info);
-      spdlog::critical("shader compile error: {} {}", path, info);
+      spdlog::critical("shader compile error: {}\n{}", path, info);
       delete[] info;
     }
     return false;

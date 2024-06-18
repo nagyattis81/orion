@@ -4,6 +4,8 @@
 #include <bass.h>
 #include <chrono>
 
+using namespace std;
+
 Music *Music::Instance() {
   if (!instance)
     instance = new Music();
@@ -48,9 +50,8 @@ bool Music::Load(const Parameters &parameters) {
 
   const auto length = BASS_ChannelBytes2Seconds(
       handle, BASS_ChannelGetLength(handle, BASS_POS_BYTE));
-  std::chrono::seconds seconds(static_cast<int>(length));
-  const auto min =
-      std::chrono::duration_cast<std::chrono::minutes>(seconds).count() % 60;
+  chrono::seconds seconds(static_cast<int>(length));
+  const auto min = chrono::duration_cast<chrono::minutes>(seconds).count() % 60;
   const auto sec = seconds.count() % 60;
 
   BASS_ChannelSetAttribute(handle, BASS_ATTRIB_VOL, parameters.volume);
@@ -61,6 +62,8 @@ bool Music::Load(const Parameters &parameters) {
 }
 
 void Music::Play() { BASS_ChannelPlay(handle, false); }
+
+void Music::Stop() { BASS_ChannelStop(handle); }
 
 double Music::GetTime() const {
   return BASS_ChannelBytes2Seconds(

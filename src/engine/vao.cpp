@@ -8,7 +8,7 @@ VAO::~VAO() {
   id = GL_NONE;
 }
 
-bool VAO::Create(std::function<GLsizei(void)> create) {
+bool VAO::Create(function<GLsizei(void)> create) {
   if (id != GL_NONE) {
     spdlog::critical("VAO invalid id!");
     return false;
@@ -20,7 +20,7 @@ bool VAO::Create(std::function<GLsizei(void)> create) {
     return false;
   }
   glBindVertexArray(id);
-
+  offset = 0;
   count = create();
 
   glBindVertexArray(GL_NONE);
@@ -49,7 +49,8 @@ void VAO::DrawElements(const GLenum mode) const {
 void VAO::VertexAttrib(const GLuint index, const GLint size, const GLenum type,
                        const GLboolean normalized, const GLsizei stride,
                        const GLsizei offset) {
+  this->offset += offset;
   glVertexAttribPointer(index, size, type, normalized, stride,
-                        ((char *)nullptr + (offset)));
+                        ((char *)nullptr + (this->offset)));
   glEnableVertexAttribArray(index);
 }

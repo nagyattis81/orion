@@ -24,10 +24,12 @@ struct Part01 : public Part {
     ClearColor(Color::BLACK);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    // TODO libs word cloud
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    static const int NUM_OF_LAYERS = 16;
+    static const int NUM_OF_LAYERS = 24;
     for (int i = 0; i < NUM_OF_LAYERS; i++) {
       mat4 m = Geometry::IDENTITY;
       m = translate(m, CENTER);

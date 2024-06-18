@@ -7,9 +7,11 @@
 #include "part.hpp"
 #include <memory>
 
+using namespace std;
+
 int main() {
 
-  std::unique_ptr<Window> window(Window::Instance());
+  unique_ptr<Window> window(Window::Instance());
   if (!window->Create(
           {.title = "demo", .fullscreen = false, .vsync = false, .samples = 4}))
     return EXIT_FAILURE;
@@ -19,7 +21,7 @@ int main() {
   if (!demo.Init())
     return EXIT_FAILURE;
 
-  std::map<double, Part *> parts = demo.CreateParts();
+  map<double, Part *> parts = demo.CreateParts();
 
   double start = 0;
   for (auto it : parts) {
@@ -32,7 +34,7 @@ int main() {
     it.second->demo = &demo;
   }
 
-  std::unique_ptr<Music> music(Music::Instance());
+  unique_ptr<Music> music(Music::Instance());
   if (!music->Load(
           {.path = Constants::MUSIC, .volume = Constants::MUTE ? 0.0f : 1.0f}))
     return EXIT_FAILURE;

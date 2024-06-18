@@ -2,13 +2,15 @@
 
 #include <vector>
 
+using namespace std;
+
 class Animation {
 private:
   struct Key {
     double time;
     float value;
   };
-  std::vector<Key> keys;
+  vector<Key> keys;
 
 public:
   void Push(const double time, const float value);

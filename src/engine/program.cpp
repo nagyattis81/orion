@@ -13,6 +13,9 @@ bool Program::Load(const char *vertexShaderPath,
                    const char *fragmentShaderPath) {
   spdlog::info("Program load [{}, {}]", vertexShaderPath, fragmentShaderPath);
 
+  vsPath = vertexShaderPath;
+  fsPath = fragmentShaderPath;
+
   Shader vs;
   if (!vs.Load(vertexShaderPath, GL_VERTEX_SHADER))
     return false;
@@ -51,7 +54,8 @@ void Program::UnBind() const { glUseProgram(GL_NONE); }
 bool Program::Location(GLint &location, const char *name) {
   location = glGetUniformLocation(id, name);
   if (location == -1) {
-    spdlog::critical("location not found: {}", name);
+    spdlog::critical("Uniform location '{}' not found in [{}, {}]", name,
+                     vsPath, fsPath);
     return false;
   }
   return true;

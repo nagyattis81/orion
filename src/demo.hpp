@@ -4,7 +4,7 @@
 #include "engine/sprite.hpp"
 #include <map>
 
-using namespace glm;
+using namespace std;
 
 struct Part;
 
@@ -12,7 +12,7 @@ struct Demo {
   Sprite logo;
   Fade fade;
 
-  std::map<double, Part *> CreateParts();
+  map<double, Part *> CreateParts();
   bool Init();
   void Render(const double time);
 };

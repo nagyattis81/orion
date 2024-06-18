@@ -1,9 +1,10 @@
 #include "grid.hpp"
 
 #include "camera.hpp"
-#include "color.hpp"
 #include "geometry.hpp"
 #include <glm/vec3.hpp>
+
+using namespace std;
 
 bool Grid::Init(const Parameters &parameters) {
   if (!program.Load("data/shaders/grid.vert", "data/shaders/grid.frag"))
@@ -17,7 +18,7 @@ bool Grid::Init(const Parameters &parameters) {
       vec3 color = vec3(0.0f);
     };
     static const GLsizei STRIDE = sizeof(Vertex);
-    std::vector<Vertex> vertices;
+    vector<Vertex> vertices;
 
     const auto Line = [&](const vec3 &a, const vec3 &b, const vec3 &color) {
       vertices.push_back({a, color});
@@ -30,7 +31,7 @@ bool Grid::Init(const Parameters &parameters) {
     for (unsigned int i = 0; i < parameters.count + 1; i++) {
       const float step = i * scale;
       const float intensity = i % parameters.thickening == 0 ? 0.75f : 0.25f;
-      const vec3 color = Color::GREEN * vec3(intensity);
+      const vec3 color = parameters.color * vec3(intensity);
       Line(vec3(step, -size, 0.0f), vec3(step, size, 0.0f), color);
       Line(vec3(-size, step, 0.0f), vec3(size, step, 0.0f), color);
       Line(vec3(-step, -size, 0.0f), vec3(-step, size, 0.0f), color);
@@ -62,9 +63,10 @@ bool Grid::Init(const Parameters &parameters) {
   return vao.Create(creator);
 }
 
-void Grid::Render(const Camera &camera, const mat4 &model) {
+void Grid::Render(const Camera &camera, const mat4 &modelMatrix) {
+  glDisable(GL_BLEND);
   program.Bind();
-  glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, &camera.MVP(model)[0][0]);
+  camera.UniformMVP(mvpLocation, modelMatrix);
   vao.DrawArrays(GL_LINES);
   program.UnBind();
 }
