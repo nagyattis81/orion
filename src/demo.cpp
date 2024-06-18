@@ -18,10 +18,13 @@ bool Demo::Init() {
     return false;
   if (!fade.Init())
     return false;
-  fade.Add(0.0, 1.0, 0.0f, 1.0f);
-  fade.Add(8.0, 9.0, 1.0f, 0.0f);
-  fade.Add(9.0, 10.0, 0.0f, 1.0f);
-  fade.Add(19.0, 20.0, 1.0f, 0.0f);
+  fade.animation.Push(0.0, 1.0f);
+  fade.animation.Push(1.0, 0.0f);
+  fade.animation.Push(8.75, 0.0f);
+  fade.animation.Push(9.0, 1.0f);
+  fade.animation.Push(9.25, 0.0f);
+  fade.animation.Push(19.0, 0.0f);
+  fade.animation.Push(20.0, 1.0f);
   return true;
 }
 
