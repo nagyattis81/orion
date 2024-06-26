@@ -21,6 +21,7 @@ public:
   void PollEvents() const;
   double GetTime() const;
   void SetWindowTitle(const char *title);
+  GLFWwindow *GetHandle() const;
 
 private:
   inline static Window *instance = nullptr;

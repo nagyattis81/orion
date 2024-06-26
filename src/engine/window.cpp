@@ -121,3 +121,5 @@ void Window::SetWindowTitle(const char *title) {
   if (window && title)
     glfwSetWindowTitle(window, title);
 }
+
+GLFWwindow *Window::GetHandle() const { return window; }

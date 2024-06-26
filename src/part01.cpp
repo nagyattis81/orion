@@ -15,6 +15,8 @@ struct Part01 : public Part {
 
   inline static const vec3 CENTER = vec3(vec2(Constants::SIZE) * 0.5f, 0.0f);
 
+  const char *Name() override { return "Part01"; }
+
   bool Init() override {
     camera.Ortho(Constants::SIZE);
     return true;

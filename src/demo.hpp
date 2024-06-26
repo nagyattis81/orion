@@ -8,11 +8,27 @@ using namespace std;
 
 struct Part;
 
-struct Demo {
+class Demo {
+private:
+  inline static Demo *instance = nullptr;
+  map<double, Part *> parts;
   Sprite logo;
   Fade fade;
 
-  map<double, Part *> CreateParts();
+  Demo();
+  bool InitParts();
+
+public:
+  static Demo *Instance();
+
   bool Init();
+
+  void Begin(const double time);
   void Render(const double time);
+  void End(const double time);
+
+  void Menu();
+  void Windows();
+
+  friend struct Part01;
 };

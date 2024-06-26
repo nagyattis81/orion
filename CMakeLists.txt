@@ -65,7 +65,6 @@ set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/glad/include)
 file(GLOB_RECURSE LIBS_GLAD_SRC "libs/glad/src/glad.c")
 set(LIBS_SRC ${LIBS_SRC} ${LIBS_GLAD_SRC})
 source_group("Library Files\\glad" FILES ${LIBS_GLAD_SRC})
-set(COMMON_SRC ${COMMON_SRC} ${LIBS_SRC})
 
 
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/assimp/include)
@@ -77,7 +76,20 @@ else ()
 	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/assimp/libassimp.so.5)
 endif ()
 
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/imgui)
+file(GLOB_RECURSE LIBS_IMGUI_SRC 
+	libs/imgui/imgui.cpp
+	libs/imgui/imgui_demo.cpp
+	libs/imgui/imgui_draw.cpp
+	libs/imgui/imgui_widgets.cpp
+	libs/imgui/imgui_tables.cpp
+	libs/imgui/backends/imgui_impl_glfw.cpp
+	libs/imgui/backends/imgui_impl_opengl3.cpp
+)
+set(LIBS_SRC ${LIBS_SRC} ${LIBS_IMGUI_SRC})
+source_group("Library Files\\imgui" FILES ${LIBS_IMGUI_SRC})
 
+set(COMMON_SRC ${COMMON_SRC} ${LIBS_SRC})
 set(DEMO_EXE "demo")
 file(GLOB_RECURSE DEMO_SRC src/*.cpp)
 set(DEMO_APP_SRC ${COMMON_SRC} ${DEMO_SRC})
