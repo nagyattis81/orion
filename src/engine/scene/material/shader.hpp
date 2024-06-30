@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./../program.hpp"
+#include "./../../program.hpp"
 #include "material.hpp"
 
 struct Material::Shader {

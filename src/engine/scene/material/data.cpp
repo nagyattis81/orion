@@ -1,6 +1,6 @@
 #include "spdlog/spdlog.h"
 
-#include "./../program.hpp"
+#include "./../../program.hpp"
 #include "data.hpp"
 
 static void NotSupportedTextureType(const aiMaterial *material,

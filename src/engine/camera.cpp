@@ -3,19 +3,26 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-void Camera::Ortho(const ivec2 &size) {
+Camera::Camera() {
+  parameters.Float("fovy", &fovy, 1.0f, 0.0f, 180.0f);
+  parameters.Float("aspect", &aspect, 0.001f, 1.0f, 2.0f);
+  parameters.Float("zNear", &zNear, 0.001f);
+  parameters.Float("zFar", &zFar);
+  parameters.Vec3("eye", &eye);
+  parameters.Vec3("center", &center);
+  parameters.Vec3("up", &up);
+}
+
+void Camera::Ortho() {
   projection = ortho(0.0f, static_cast<float>(size.x),
                      static_cast<float>(size.y), 0.0f, 0.0f, 100.0f);
 }
 
-void Camera::Perspective(const float fovy, const float aspect,
-                         const float zNear, const float zFar) {
+void Camera::Perspective() {
   projection = perspective(glm::radians(fovy), aspect, zNear, zFar);
 }
 
-void Camera::LookAt(const vec3 &eye, const vec3 &center, const vec3 &up) {
-  view = lookAt(eye, center, up);
-}
+void Camera::LookAt() { view = lookAt(eye, center, up); }
 
 void Camera::UniformProjection(const GLint location) const {
   glUniformMatrix4fv(location, 1, GL_FALSE, &projection[0][0]);

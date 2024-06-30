@@ -15,15 +15,18 @@ private:
   const aiScene *scene = nullptr;
   vector<Mesh *> meshes;
   vector<Material *> materials;
+  Parameters parameters = Parameters("scene");
 
-  bool InitMaterials(const aiScene *scene, const string &texturePath);
-  bool InitMeshes(const aiScene *scene);
+  bool InitMaterials(const string &texturePath);
+  bool InitMeshes();
 
-public:
-  Scene(const aiScene *scene);
-
-  bool Init(const string &texturePath);
   void RenderNode(const Camera &camera, aiNode *node, mat4 parentTransformation,
                   const bool transparent);
+
+public:
+  Scene();
+  bool Init(const aiScene *scene, const string &texturePath);
   void Render(const Camera &camera, const mat4 &transformation);
+
+  Parameters *GetParameters() { return &parameters; }
 };

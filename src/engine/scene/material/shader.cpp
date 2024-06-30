@@ -1,5 +1,5 @@
 #include "shader.hpp"
-#include "./../camera.hpp"
+#include "./../../camera.hpp"
 #include "data.hpp"
 
 bool Material::Shader::Load() {

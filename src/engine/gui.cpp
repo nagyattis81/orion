@@ -1,12 +1,11 @@
 #include "gui.hpp"
-#include "./../constants.hpp"
 #include "./../demo.hpp"
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
 GUI *GUI::Instance() {
   if (!instance)
-    instance = new GUI(!Constants::EDITOR);
+    instance = new GUI(!Demo::EDITOR);
   return instance;
 }
 

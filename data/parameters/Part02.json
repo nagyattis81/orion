@@ -1,0 +1,108 @@
+{
+	"children": [
+		{
+			"children": [
+			],
+			"name": "",
+			"parameters": [
+				{
+					"name": "fovy",
+					"value": [
+						60 
+					] 
+				},
+				{
+					"name": "aspect",
+					"value": [
+						1.777777791023254 
+					] 
+				},
+				{
+					"name": "zNear",
+					"value": [
+						0.1000000014901161 
+					] 
+				},
+				{
+					"name": "zFar",
+					"value": [
+						1000 
+					] 
+				},
+				{
+					"name": "eye",
+					"value": [
+						50,
+						-100,
+						50 
+					] 
+				},
+				{
+					"name": "center",
+					"value": [
+						0,
+						20,
+						50 
+					] 
+				},
+				{
+					"name": "up",
+					"value": [
+						0,
+						0,
+						1 
+					] 
+				} 
+			],
+			"type": "camera" 
+		},
+		{
+			"children": [
+			],
+			"name": "",
+			"parameters": [
+				{
+					"name": "enable",
+					"value": [
+						true 
+					] 
+				} 
+			],
+			"type": "grid" 
+		},
+		{
+			"children": [
+			],
+			"name": "",
+			"parameters": [
+			],
+			"type": "scene" 
+		} 
+	],
+	"name": "Part02",
+	"parameters": [
+		{
+			"name": "clearColor",
+			"value": [
+				0.5,
+				0.5,
+				0.5 
+			] 
+		},
+		{
+			"name": "scaleModel",
+			"value": [
+				0.1000000014901161 
+			] 
+		},
+		{
+			"name": "translateModel",
+			"value": [
+				0,
+				0,
+				0 
+			] 
+		} 
+	],
+	"type": "part" 
+} 

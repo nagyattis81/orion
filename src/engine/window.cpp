@@ -56,8 +56,8 @@ bool Window::Create(const Parameters &parameters) {
   unsigned int width = mode->width;
   unsigned int height = mode->height;
   if (!parameters.fullscreen) {
-    width = mode->width / 2;
-    height = mode->height / 2;
+    width = static_cast<unsigned int>(mode->width * 0.75f);
+    height = static_cast<unsigned int>(mode->height * 0.75f);
   }
 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);

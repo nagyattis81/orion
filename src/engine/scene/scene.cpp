@@ -1,11 +1,14 @@
 #include "spdlog/spdlog.h"
 
-#include "camera.hpp"
+#include "./../camera.hpp"
 #include "scene.hpp"
 
-Scene::Scene(const aiScene *scene) : scene(scene) {}
+Scene::Scene() {
+  parameters.Tab("materials");
+  parameters.Tab("meshes");
+}
 
-bool Scene::InitMaterials(const aiScene *scene, const string &texturePath) {
+bool Scene::InitMaterials(const string &texturePath) {
   for (unsigned int m = 0; m < scene->mNumMaterials; m++) {
     const aiMaterial *aimaterial = scene->mMaterials[m];
     if (!aimaterial) {
@@ -27,7 +30,7 @@ bool Scene::InitMaterials(const aiScene *scene, const string &texturePath) {
   return true;
 }
 
-bool Scene::InitMeshes(const aiScene *scene) {
+bool Scene::InitMeshes() {
   for (unsigned int m = 0; m < scene->mNumMeshes; m++) {
     const aiMesh *aimesh = scene->mMeshes[m];
     if (!aimesh) {
@@ -49,10 +52,11 @@ bool Scene::InitMeshes(const aiScene *scene) {
   return true;
 }
 
-bool Scene::Init(const string &texturePath) {
-  if (!InitMaterials(scene, texturePath))
+bool Scene::Init(const aiScene *scene, const string &texturePath) {
+  this->scene = scene;
+  if (!InitMaterials(texturePath))
     return false;
-  if (!InitMeshes(scene))
+  if (!InitMeshes())
     return false;
   return true;
 }

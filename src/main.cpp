@@ -1,11 +1,9 @@
 #include "spdlog/spdlog.h"
 
-#include "constants.hpp"
 #include "demo.hpp"
 #include "engine/gui.hpp"
 #include "engine/music.hpp"
 #include "engine/window.hpp"
-#include "part.hpp"
 #include <memory>
 
 using namespace std;
@@ -27,11 +25,10 @@ int main() {
     return EXIT_FAILURE;
 
   unique_ptr<Music> music(Music::Instance());
-  if (!music->Load(
-          {.path = Constants::MUSIC, .volume = Constants::MUTE ? 0.0f : 1.0f}))
+  if (!music->Load({.path = Demo::MUSIC, .volume = Demo::MUTE ? 0.0f : 1.0f}))
     return EXIT_FAILURE;
 
-  music->SetTime(Constants::OFFSET);
+  music->SetTime(Demo::OFFSET);
   music->Play();
 
   while (window->Open()) {
@@ -48,6 +45,9 @@ int main() {
 
     window->SwapBuffers();
   }
+
+  if (Demo::EDITOR)
+    demo->Delete();
 
   return EXIT_SUCCESS;
 }

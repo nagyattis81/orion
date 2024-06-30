@@ -6,7 +6,9 @@
 
 using namespace std;
 
-bool Grid::Init(const Parameters &parameters) {
+Grid::Grid() { parameters.Bool("enable", &enable); }
+
+bool Grid::Init(const InitParameters &initParameters) {
   if (!program.Load("data/shaders/grid.vert", "data/shaders/grid.frag"))
     return false;
   if (!program.Location(mvpLocation, "mvp"))
@@ -25,13 +27,14 @@ bool Grid::Init(const Parameters &parameters) {
       vertices.push_back({b, color});
     };
 
-    const float size = parameters.size;
-    const float scale = size / (float)parameters.count;
+    const float size = initParameters.size;
+    const float scale = size / (float)initParameters.count;
 
-    for (unsigned int i = 0; i < parameters.count + 1; i++) {
+    for (unsigned int i = 0; i < initParameters.count + 1; i++) {
       const float step = i * scale;
-      const float intensity = i % parameters.thickening == 0 ? 0.75f : 0.25f;
-      const vec3 color = parameters.color * vec3(intensity);
+      const float intensity =
+          i % initParameters.thickening == 0 ? 0.75f : 0.25f;
+      const vec3 color = initParameters.color * vec3(intensity);
       Line(vec3(step, -size, 0.0f), vec3(step, size, 0.0f), color);
       Line(vec3(-size, step, 0.0f), vec3(size, step, 0.0f), color);
       Line(vec3(-step, -size, 0.0f), vec3(-step, size, 0.0f), color);
@@ -42,7 +45,7 @@ bool Grid::Init(const Parameters &parameters) {
       Line(Geometry::ORIGO, p, color);
     };
 
-    if (parameters.normals) {
+    if (initParameters.normals) {
       Normal(vec3(size, 0.0f, 0.0f), Color::RED);
       Normal(vec3(0.0f, size, 0.0f), Color::GREEN);
       Normal(vec3(0.0f, 0.0f, size), Color::BLUE);
@@ -60,10 +63,14 @@ bool Grid::Init(const Parameters &parameters) {
     return static_cast<GLsizei>(vertices.size());
   };
 
-  return vao.Create(creator);
+  if (!vao.Create(creator))
+    return false;
+  return true;
 }
 
 void Grid::Render(const Camera &camera, const mat4 &modelMatrix) {
+  if (!enable)
+    return;
   glDisable(GL_BLEND);
   program.Bind();
   camera.UniformMVP(mvpLocation, modelMatrix);

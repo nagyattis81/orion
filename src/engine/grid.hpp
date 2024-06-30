@@ -2,6 +2,7 @@
 
 #include "buffers.hpp"
 #include "color.hpp"
+#include "parameters/parameters.hpp"
 #include "program.hpp"
 #include "vao.hpp"
 #include <glm/mat4x4.hpp>
@@ -16,15 +17,19 @@ private:
   VAO vao;
   VBO vbo;
   GLint mvpLocation = -1;
+  bool enable = true;
+  Parameters parameters = Parameters("grid");
 
 public:
-  struct Parameters {
+  Grid();
+  struct InitParameters {
     float size = 10.0f;
     unsigned int count = 10;
     bool normals = false;
     unsigned int thickening = 5;
     const vec3 color = Color::GREEN;
   };
-  bool Init(const Parameters &parameters);
+  bool Init(const InitParameters &initParameters);
   void Render(const Camera &camera, const mat4 &modelMatrix = mat4(1.0f));
+  Parameters *GetParameters() { return &parameters; }
 };

@@ -1,11 +1,11 @@
 #include "spdlog/spdlog.h"
 
 #include "demo.hpp"
-#include "part.hpp"
+#include "engine/part.hpp"
 #include <imgui.h>
 
-extern Part *CreatePart01();
-extern Part *CreatePart02();
+extern Part *CreatePart01(const bool showWindow);
+extern Part *CreatePart02(const bool showWindow);
 
 Demo *Demo::Instance() {
   if (!instance)
@@ -14,8 +14,8 @@ Demo *Demo::Instance() {
 }
 
 Demo::Demo() {
-  parts[9.0] = CreatePart01();
-  parts[60.0] = CreatePart02();
+  parts[9.0] = CreatePart01(false);
+  parts[60.0] = CreatePart02(true);
 }
 
 bool Demo::Init() {
@@ -33,12 +33,23 @@ bool Demo::Init() {
   return InitParts();
 }
 
+void Demo::Delete() {
+  for (auto it : parts)
+    it.second->parameters.SaveToFile(it.second->name);
+}
+
 bool Demo::InitParts() {
   double start = 0;
   for (auto it : parts) {
     spdlog::info("*** Part {} init", it.first);
-    if (!it.second->Init())
+    if (!it.second->parameters.LoadFromFile(it.second->name)) {
+      spdlog::critical("Load parameter json error");
       return false;
+    }
+    if (!it.second->Init()) {
+      spdlog::critical("Init part error");
+      return false;
+    }
     it.second->start = start;
     it.second->end = it.first;
     start = it.first;
@@ -62,7 +73,7 @@ void Demo::End(const double time) { fade.Render(time); }
 void Demo::Menu() {
   for (auto it : parts) {
     Part *part = it.second;
-    if (ImGui::MenuItem(part->Name(), nullptr, part->showWindow))
+    if (ImGui::MenuItem(part->name, nullptr, part->showWindow))
       part->showWindow = !part->showWindow;
   }
 }
@@ -72,8 +83,9 @@ void Demo::Windows() {
     Part *part = it.second;
     if (!part->showWindow)
       continue;
-    if (ImGui::Begin(part->Name(), &part->showWindow)) {
-      part->GUI();
+    auto &parameters = part->parameters;
+    if (ImGui::Begin(part->name, &part->showWindow)) {
+      parameters.GUI();
       ImGui::End();
     }
   }

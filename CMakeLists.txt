@@ -67,6 +67,12 @@ set(LIBS_SRC ${LIBS_SRC} ${LIBS_GLAD_SRC})
 source_group("Library Files\\glad" FILES ${LIBS_GLAD_SRC})
 
 
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/jsonxx)
+file(GLOB_RECURSE LIBS_JSONXX_SRC "libs/jsonxx/jsonxx.cc")
+set(LIBS_SRC ${LIBS_SRC} ${LIBS_JSONXX_SRC})
+source_group("Library Files\\jsonxx" FILES ${LIBS_JSONXX_SRC})
+
+
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/assimp/include)
 if (WIN32)
 	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/assimp/assimp-vc143-mt.lib)

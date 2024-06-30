@@ -1,9 +1,9 @@
-#include "part.hpp"
 
-#include "constants.hpp"
+#include "demo.hpp"
 #include "engine/camera.hpp"
 #include "engine/color.hpp"
 #include "engine/geometry.hpp"
+#include "engine/part.hpp"
 #include "engine/sprite.hpp"
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -13,12 +13,12 @@ using namespace glm;
 struct Part01 : public Part {
   Camera camera;
 
-  inline static const vec3 CENTER = vec3(vec2(Constants::SIZE) * 0.5f, 0.0f);
+  inline static const vec3 CENTER = vec3(vec2(Demo::SIZE) * 0.5f, 0.0f);
 
-  const char *Name() override { return "Part01"; }
+  Part01(const char *name, const bool showWindow) : Part(name, showWindow) {}
 
   bool Init() override {
-    camera.Ortho(Constants::SIZE);
+    camera.Ortho();
     return true;
   }
 
@@ -42,4 +42,6 @@ struct Part01 : public Part {
   }
 };
 
-extern Part *CreatePart01() { return new Part01(); }
+extern Part *CreatePart01(const bool showWindow) {
+  return new Part01("Part01", showWindow);
+}
