@@ -8,7 +8,7 @@
 using namespace glm;
 using namespace std;
 
-class Camera;
+struct Camera;
 
 class Scene {
 private:

@@ -23,6 +23,7 @@ struct Part02 : public Part {
     parameter.Color3("clearColor", &clearColor);
     parameter.Float("scaleModel", &scaleModel, 0.001f, 0.001f, 1.0f, "%.3f");
     parameter.Vec3("translateModel", &translateModel);
+    parameter.Group(&camera.parameter);
   }
 
   bool Init() override {

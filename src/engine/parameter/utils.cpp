@@ -2,14 +2,18 @@
 #include "constants.hpp"
 #include "parameter.hpp"
 
+bool Utils::IsGroup(const Type type) {
+  return type == Type::TYPE_WINDOW || type == Type::TYPE_COLLAPSE ||
+         type == Type::TYPE_TAB;
+}
+
 void Utils::SaveToObject(jsonxx::Object &object, Parameter *parameter) {
   jsonxx::Object data;
   data << "type" << Constants::TYPE_NAMES[parameter->type];
 
-  if (parameter->type == Type::TYPE_WINDOW)
+  if (Utils::IsGroup(parameter->type)) {
     data << "show" << parameter->show;
-
-  if (parameter->type != Type::TYPE_WINDOW) {
+  } else {
     jsonxx::Array arr;
     parameter->Save(arr);
     data << "value" << arr;
@@ -43,8 +47,10 @@ void Utils::LoadFromObject(const jsonxx::Object &object, Parameter *parameter) {
   if (type == Type::TYPE_COUNT || parameter->type != type)
     return;
 
-  if (data.has<jsonxx::Boolean>("show"))
+  if (data.has<jsonxx::Boolean>("show")) {
     parameter->show = data.get<jsonxx::Boolean>("show");
+    parameter->firstShow = parameter->show;
+  }
 
   if (data.has<jsonxx::Array>("value"))
     parameter->Load(data.get<jsonxx::Array>("value"));

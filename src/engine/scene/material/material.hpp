@@ -10,7 +10,7 @@
 using namespace glm;
 using namespace std;
 
-class Camera;
+struct Camera;
 
 class Material {
 public:

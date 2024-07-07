@@ -9,7 +9,7 @@
 
 using namespace glm;
 
-class Camera;
+struct Camera;
 
 class Grid {
 private:

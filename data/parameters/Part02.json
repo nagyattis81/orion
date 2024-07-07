@@ -1,20 +1,96 @@
 {
-  "Part02": {
-    "children": {
-      "clearColor": {
-        "type": "color3",
-        "value": [0.1095251813530922, 0.1541983336210251, 0.2107843160629272]
-      },
-      "scaleModel": {
-        "type": "float",
-        "value": [0.006000000052154064]
-      },
-      "translateModel": {
-        "type": "vec3",
-        "value": [0, 0, 0]
-      }
-    },
-    "show": true,
-    "type": "window"
-  }
-}
+	"Part02": {
+		"children": {
+			"camera": {
+				"children": {
+					"projection": {
+						"children": {
+							"aspect": {
+								"type": "float",
+								"value": [
+									1.777777791023254 
+								] 
+							},
+							"fovy": {
+								"type": "float",
+								"value": [
+									60 
+								] 
+							},
+							"zFar": {
+								"type": "float",
+								"value": [
+									1000 
+								] 
+							},
+							"zNear": {
+								"type": "float",
+								"value": [
+									0.1000000014901161 
+								] 
+							} 
+						},
+						"show": true,
+						"type": "tab" 
+					},
+					"view": {
+						"children": {
+							"center": {
+								"type": "vec3",
+								"value": [
+									0,
+									0,
+									0 
+								] 
+							},
+							"eye": {
+								"type": "vec3",
+								"value": [
+									5,
+									5,
+									5 
+								] 
+							},
+							"up": {
+								"type": "vec3",
+								"value": [
+									0,
+									0,
+									1 
+								] 
+							} 
+						},
+						"show": false,
+						"type": "tab" 
+					} 
+				},
+				"show": true,
+				"type": "collapse" 
+			},
+			"clearColor": {
+				"type": "color3",
+				"value": [
+					0.5,
+					0.5,
+					0.5 
+				] 
+			},
+			"scaleModel": {
+				"type": "float",
+				"value": [
+					0.009999999776482582 
+				] 
+			},
+			"translateModel": {
+				"type": "vec3",
+				"value": [
+					0,
+					0,
+					0 
+				] 
+			} 
+		},
+		"show": true,
+		"type": "window" 
+	} 
+} 

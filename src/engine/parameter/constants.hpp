@@ -8,9 +8,6 @@ using namespace std;
 struct Constants {
   static inline auto FOLDER = "data/parameters/";
   static inline const string TYPE_NAMES[Type::TYPE_COUNT] = {
-      "window",
-      "color3",
-      "vec3",
-      "float",
+      "window", "collapse", "tab", "color3", "vec3", "float",
   };
 };

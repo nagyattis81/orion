@@ -42,21 +42,81 @@ void Parameter::SaveToFile() {
   file.close();
 }
 
-void Parameter::GUI() {
-  switch (type) {
-  case Type::TYPE_WINDOW: {
-    if (show && ImGui::Begin(name.c_str(), &show)) {
-      for (auto it : children)
-        it->GUI();
-      ImGui::End();
+void Parameter::HandleChildren(Parameter *parameter, const Type filterType) {
+  for (auto it : parameter->children) {
+    if (filterType != Type::TYPE_COUNT && it->type == filterType)
+      continue;
+    it->GUI();
+  }
+}
+
+void Parameter::HandleWindow() {
+  if (type != Type::TYPE_WINDOW)
+    return;
+  if (show && ImGui::Begin(name.c_str(), &show)) {
+    HandleTabs();
+    ImGui::End();
+  }
+}
+
+void Parameter::HandleCollapse() {
+  if (type != Type::TYPE_COLLAPSE)
+    return;
+  ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_None;
+  if (firstShow)
+    flags |= ImGuiTreeNodeFlags_DefaultOpen;
+  show = false;
+  if (ImGui::CollapsingHeader(name.c_str(), flags)) {
+    HandleTabs();
+    show = true;
+  }
+}
+
+void Parameter::HandleSimple() {
+  if (Utils::IsGroup(type))
+    return;
+  HandleChildren(this);
+}
+
+void Parameter::HandleTab(Parameter *parameter) {
+  ImGuiTabItemFlags tab_item_flags = ImGuiTabItemFlags_None;
+  if (parameter->firstShow) {
+    tab_item_flags |= ImGuiTabItemFlags_SetSelected;
+    parameter->firstShow = false;
+  }
+  if (ImGui::BeginTabItem(parameter->name.c_str(), nullptr, tab_item_flags)) {
+    parameter->show = true;
+    HandleChildren(parameter);
+    ImGui::EndTabItem();
+  }
+}
+
+void Parameter::HandleTabs() {
+  // https://medium.com/swlh/doing-it-the-functional-way-in-c-5c392bbdd46a
+  const auto isNoTab =
+      find_if(children.begin(), children.end(), [](Parameter *parameter) {
+        return parameter->type == Type::TYPE_TAB;
+      }) == children.end();
+  if (isNoTab) {
+    HandleChildren(this);
+    return;
+  }
+  if (ImGui::BeginTabBar(name.c_str())) {
+    for (auto it : children) {
+      if (it->type != Type::TYPE_TAB)
+        continue;
+      it->show = false;
+      HandleTab(it);
     }
-    break;
+    ImGui::EndTabBar();
   }
-  default: {
-    for (auto it : children)
-      it->GUI();
-  }
-  }
+  HandleChildren(this, Type::TYPE_TAB);
+}
+
+void Parameter::GUI() {
+  HandleWindow();
+  HandleCollapse();
+  HandleSimple();
 }
 
 void Parameter::Color3(const char *name, vec3 *color) {
@@ -88,3 +148,5 @@ void Parameter::Float(const char *name, float *value, const float v_speed,
   parameter->format = format;
   children.push_back(parameter);
 }
+
+void Parameter::Group(Parameter *parameter) { children.push_back(parameter); }

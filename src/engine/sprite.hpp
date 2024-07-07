@@ -8,7 +8,7 @@
 
 using namespace glm;
 
-class Camera;
+struct Camera;
 
 class Sprite {
 private:
