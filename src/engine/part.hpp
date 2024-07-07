@@ -1,7 +1,6 @@
 #pragma once
 
 #include "./../demo.hpp"
-#include "parameters/parameters.hpp"
 #include <imgui.h>
 
 struct Part {
@@ -11,12 +10,8 @@ struct Part {
   Demo *demo = nullptr;
   bool showWindow = false;
 
-  Parameters parameters = Parameters("part");
-
   Part(const char *name, const bool showWindow)
-      : name(name), showWindow(showWindow) {
-    parameters.name = name;
-  }
+      : name(name), showWindow(showWindow) {}
 
   virtual bool Init() { return true; }
   virtual void Render(const float globalTime) = 0;

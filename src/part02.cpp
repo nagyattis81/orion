@@ -11,7 +11,7 @@
 
 struct Part02 : public Part {
   vec3 clearColor = Color::LIGHTGRAY;
-  float scaleModel = 0.1f;
+  float scaleModel = 0.01f;
   vec3 translateModel = vec3(0.0f);
 
   Camera camera;
@@ -20,14 +20,7 @@ struct Part02 : public Part {
   Scene scene;
 
   Part02(const char *name, const bool showWindow) : Part(name, showWindow) {
-    parameters.Color3("clearColor", &clearColor);
-    parameters.Float("scaleModel", &scaleModel, 0.001f, 0.001f, 1.0f, "%.3f");
-    parameters.Vec3("translateModel", &translateModel);
-    parameters.Children({
-        camera.GetParameters(),
-        grid.GetParameters(),
-        scene.GetParameters(),
-    });
+    // TODO add params
   }
 
   bool Init() override {

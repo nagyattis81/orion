@@ -6,7 +6,9 @@
 
 using namespace std;
 
-Grid::Grid() { parameters.Bool("enable", &enable); }
+Grid::Grid() {
+  // TODO add enable params
+}
 
 bool Grid::Init(const InitParameters &initParameters) {
   if (!program.Load("data/shaders/grid.vert", "data/shaders/grid.frag"))

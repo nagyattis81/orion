@@ -2,7 +2,6 @@
 
 #include "./../demo.hpp"
 #include "geometry.hpp"
-#include "parameters/parameters.hpp"
 #include <glad/glad.h>
 #include <glm/mat4x4.hpp>
 
@@ -23,7 +22,6 @@ private:
 
   mat4 view = mat4(1.0f);
   mat4 projection = mat4(1.0f);
-  Parameters parameters = Parameters("camera");
 
 public:
   Camera();
@@ -35,5 +33,4 @@ public:
   void UniformMVP(const GLint location, const mat4 &model) const;
   void UniformNormal(const GLint location, const mat4 &model) const;
   void UniformModelView(const GLint location, const mat4 &model) const;
-  Parameters *GetParameters() { return &parameters; }
 };

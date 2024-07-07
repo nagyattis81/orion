@@ -15,7 +15,6 @@ private:
   const aiScene *scene = nullptr;
   vector<Mesh *> meshes;
   vector<Material *> materials;
-  Parameters parameters = Parameters("scene");
 
   bool InitMaterials(const string &texturePath);
   bool InitMeshes();
@@ -27,6 +26,4 @@ public:
   Scene();
   bool Init(const aiScene *scene, const string &texturePath);
   void Render(const Camera &camera, const mat4 &transformation);
-
-  Parameters *GetParameters() { return &parameters; }
 };

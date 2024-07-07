@@ -4,8 +4,7 @@
 #include "scene.hpp"
 
 Scene::Scene() {
-  parameters.Tab("materials");
-  parameters.Tab("meshes");
+  // TODO add params (tabs)
 }
 
 bool Scene::InitMaterials(const string &texturePath) {

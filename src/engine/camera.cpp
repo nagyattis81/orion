@@ -4,13 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 Camera::Camera() {
-  parameters.Float("fovy", &fovy, 1.0f, 0.0f, 180.0f);
-  parameters.Float("aspect", &aspect, 0.001f, 1.0f, 2.0f);
-  parameters.Float("zNear", &zNear, 0.001f);
-  parameters.Float("zFar", &zFar);
-  parameters.Vec3("eye", &eye);
-  parameters.Vec3("center", &center);
-  parameters.Vec3("up", &up);
+  // TODO add parameters
 }
 
 void Camera::Ortho() {

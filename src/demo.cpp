@@ -34,18 +34,14 @@ bool Demo::Init() {
 }
 
 void Demo::Delete() {
-  for (auto it : parts)
-    it.second->parameters.SaveToFile(it.second->name);
+  // TODO params SAVE to FILE
 }
 
 bool Demo::InitParts() {
   double start = 0;
   for (auto it : parts) {
     spdlog::info("*** Part {} init", it.first);
-    if (!it.second->parameters.LoadFromFile(it.second->name)) {
-      spdlog::critical("Load parameter json error");
-      return false;
-    }
+    // TODO params LOAD from FILE
     if (!it.second->Init()) {
       spdlog::critical("Init part error");
       return false;
@@ -83,10 +79,6 @@ void Demo::Windows() {
     Part *part = it.second;
     if (!part->showWindow)
       continue;
-    auto &parameters = part->parameters;
-    if (ImGui::Begin(part->name, &part->showWindow)) {
-      parameters.GUI();
-      ImGui::End();
-    }
+    // TODO params render GUI
   }
 }
