@@ -19,8 +19,10 @@ struct Part02 : public Part {
   Model model;
   Scene scene;
 
-  Part02(const char *name, const bool showWindow) : Part(name, showWindow) {
-    // TODO add params
+  Part02(const char *name) : Part(name) {
+    parameter.Color3("clearColor", &clearColor);
+    parameter.Float("scaleModel", &scaleModel, 0.001f, 0.001f, 1.0f, "%.3f");
+    parameter.Vec3("translateModel", &translateModel);
   }
 
   bool Init() override {
@@ -55,6 +57,4 @@ struct Part02 : public Part {
   }
 };
 
-extern Part *CreatePart02(const bool showWindow) {
-  return new Part02("Part02", showWindow);
-}
+extern Part *CreatePart02() { return new Part02("Part02"); }

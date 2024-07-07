@@ -2,6 +2,7 @@
 
 #include "buffers.hpp"
 #include "color.hpp"
+#include "parameter/parameter.hpp"
 #include "program.hpp"
 #include "vao.hpp"
 #include <glm/mat4x4.hpp>
@@ -17,6 +18,7 @@ private:
   VBO vbo;
   GLint mvpLocation = -1;
   bool enable = true;
+  Parameter parameter;
 
 public:
   Grid();

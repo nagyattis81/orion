@@ -15,7 +15,7 @@ struct Part01 : public Part {
 
   inline static const vec3 CENTER = vec3(vec2(Demo::SIZE) * 0.5f, 0.0f);
 
-  Part01(const char *name, const bool showWindow) : Part(name, showWindow) {}
+  Part01(const char *name) : Part(name) {}
 
   bool Init() override {
     camera.Ortho();
@@ -42,6 +42,4 @@ struct Part01 : public Part {
   }
 };
 
-extern Part *CreatePart01(const bool showWindow) {
-  return new Part01("Part01", showWindow);
-}
+extern Part *CreatePart01() { return new Part01("Part01"); }

@@ -4,8 +4,8 @@
 #include "engine/part.hpp"
 #include <imgui.h>
 
-extern Part *CreatePart01(const bool showWindow);
-extern Part *CreatePart02(const bool showWindow);
+extern Part *CreatePart01();
+extern Part *CreatePart02();
 
 Demo *Demo::Instance() {
   if (!instance)
@@ -14,8 +14,8 @@ Demo *Demo::Instance() {
 }
 
 Demo::Demo() {
-  parts[9.0] = CreatePart01(false);
-  parts[60.0] = CreatePart02(true);
+  parts[9.0] = CreatePart01();
+  parts[60.0] = CreatePart02();
 }
 
 bool Demo::Init() {
@@ -34,16 +34,20 @@ bool Demo::Init() {
 }
 
 void Demo::Delete() {
-  // TODO params SAVE to FILE
+  for (auto it : parts)
+    it.second->Save();
 }
 
 bool Demo::InitParts() {
   double start = 0;
   for (auto it : parts) {
     spdlog::info("*** Part {} init", it.first);
-    // TODO params LOAD from FILE
+    if (!it.second->Load()) {
+      spdlog::critical("Load error");
+      return false;
+    }
     if (!it.second->Init()) {
-      spdlog::critical("Init part error");
+      spdlog::critical("Init error");
       return false;
     }
     it.second->start = start;
@@ -69,16 +73,19 @@ void Demo::End(const double time) { fade.Render(time); }
 void Demo::Menu() {
   for (auto it : parts) {
     Part *part = it.second;
-    if (ImGui::MenuItem(part->name, nullptr, part->showWindow))
-      part->showWindow = !part->showWindow;
+    bool &show = part->parameter.show;
+    if (ImGui::MenuItem(part->name, nullptr, show))
+      show = !show;
   }
 }
 
 void Demo::Windows() {
-  for (auto it : parts) {
-    Part *part = it.second;
-    if (!part->showWindow)
-      continue;
-    // TODO params render GUI
-  }
+  for (auto it : parts)
+    it.second->parameter.GUI();
+  /* if (!part->showWindow)
+    continue;
+  if (ImGui::Begin(part->name, &part->showWindow)) {
+    part->GUI();
+    ImGui::End();
+  } */
 }

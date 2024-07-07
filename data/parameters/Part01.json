@@ -1,8 +1,6 @@
 {
-	"children": [
-	],
-	"name": "Part01",
-	"parameters": [
-	],
-	"type": "part" 
+	"Part01": {
+		"show": false,
+		"type": "window" 
+	} 
 } 
