@@ -71,7 +71,17 @@ if(NOT glm_POPULATED)
 	set(COMMON_INCLUDES ${COMMON_INCLUDES} ${glm_SOURCE_DIR})
 endif()
 
-set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/spdlog/include)
+#################################### SPDLOG ####################################
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG v1.14.1
+)
+FetchContent_GetProperties(spdlog)
+if(NOT spdlog_POPULATED)
+	FetchContent_Populate(spdlog)
+	set(COMMON_INCLUDES ${COMMON_INCLUDES} ${spdlog_SOURCE_DIR}/include)
+endif()
 
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/glad/include)
 file(GLOB_RECURSE LIBS_GLAD_SRC "libs/glad/src/glad.c")
