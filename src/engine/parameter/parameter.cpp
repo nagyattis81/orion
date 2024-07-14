@@ -3,7 +3,6 @@
 #include "constants.hpp"
 #include "float.hpp"
 #include "spdlog/spdlog.h"
-#include "utils.hpp"
 #include "vec3.hpp"
 #include <filesystem>
 #include <fstream>
@@ -21,7 +20,7 @@ bool Parameter::LoadFromFile() {
   jsonxx::Object object;
   if (!object.parse(str))
     return false;
-  Utils::LoadFromObject(object, this);
+  LoadFromObject(object, this);
   return true;
 }
 
@@ -36,7 +35,7 @@ void Parameter::SaveToFile() {
     return;
   }
   jsonxx::Object object;
-  Utils::SaveToObject(object, this);
+  SaveToObject(object, this);
   std::string str = object.json();
   file << str;
   file.close();
@@ -48,6 +47,11 @@ void Parameter::HandleChildren(Parameter *parameter, const Type filterType) {
       continue;
     it->GUI();
   }
+}
+
+void Parameter::HandleMenuItem(const char *name) {
+  if (ImGui::MenuItem(name, nullptr, show))
+    show = !show;
 }
 
 void Parameter::HandleWindow() {
@@ -73,7 +77,7 @@ void Parameter::HandleCollapse() {
 }
 
 void Parameter::HandleSimple() {
-  if (Utils::IsGroup(type))
+  if (IsGroup(type))
     return;
   HandleChildren(this);
 }
@@ -150,3 +154,71 @@ void Parameter::Float(const char *name, float *value, const float v_speed,
 }
 
 void Parameter::Group(Parameter *parameter) { children.push_back(parameter); }
+
+void Parameter::Set(const char *name, const Type &type) {
+  this->name = name;
+  this->type = type;
+}
+
+bool Parameter::IsGroup(const Type type) {
+  return type == Type::TYPE_WINDOW || type == Type::TYPE_COLLAPSE ||
+         type == Type::TYPE_TAB;
+}
+
+void Parameter::SaveToObject(jsonxx::Object &object, Parameter *parameter) {
+  jsonxx::Object data;
+  data << "type" << Constants::TYPE_NAMES[parameter->type];
+
+  if (IsGroup(parameter->type)) {
+    data << "show" << parameter->show;
+  } else {
+    jsonxx::Array arr;
+    parameter->Save(arr);
+    data << "value" << arr;
+  }
+
+  if (!parameter->children.empty()) {
+    jsonxx::Object children;
+    for (auto it : parameter->children)
+      SaveToObject(children, it);
+    data << "children" << children;
+  }
+  object << parameter->name << data;
+}
+
+void Parameter::LoadFromObject(const jsonxx::Object &object,
+                               Parameter *parameter) {
+  if (!object.has<jsonxx::Object>(parameter->name))
+    return;
+  const auto data = object.get<jsonxx::Object>(parameter->name);
+
+  if (!data.has<jsonxx::String>("type"))
+    return;
+
+  const string typeStr = data.get<jsonxx::String>("type");
+  Type type = Type::TYPE_COUNT;
+  for (unsigned int i = 0; i < Type::TYPE_COUNT; i++) {
+    if (typeStr == Constants::TYPE_NAMES[i]) {
+      type = Type(i);
+      break;
+    }
+  }
+  if (type == Type::TYPE_COUNT || parameter->type != type)
+    return;
+
+  if (data.has<jsonxx::Boolean>("show")) {
+    parameter->show = data.get<jsonxx::Boolean>("show");
+    parameter->firstShow = parameter->show;
+  }
+
+  if (data.has<jsonxx::Array>("value"))
+    parameter->Load(data.get<jsonxx::Array>("value"));
+
+  if (!data.has<jsonxx::Object>("children"))
+    return;
+  const auto children = data.get<jsonxx::Object>("children");
+
+  for (auto it : parameter->children) {
+    LoadFromObject(children, it);
+  }
+}

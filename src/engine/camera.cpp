@@ -4,18 +4,15 @@
 #include <glm/gtc/type_ptr.hpp>
 
 Camera::Camera() {
-  parameter.name = "camera";
-  parameter.type = Type::TYPE_COLLAPSE;
+  parameter.Set("camera", Type::TYPE_COLLAPSE);
 
-  viewParameter.name = "view";
-  viewParameter.type = Type::TYPE_TAB;
+  viewParameter.Set("view", Type::TYPE_TAB);
   viewParameter.Vec3("eye", &eye);
   viewParameter.Vec3("center", &center);
   viewParameter.Vec3("up", &up);
   parameter.Group(&viewParameter);
 
-  projectionParameter.name = "projection";
-  projectionParameter.type = Type::TYPE_TAB;
+  projectionParameter.Set("projection", Type::TYPE_TAB);
   projectionParameter.Float("fovy", &fovy);
   projectionParameter.Float("aspect", &aspect);
   projectionParameter.Float("zNear", &zNear);

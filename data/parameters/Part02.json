@@ -30,7 +30,7 @@
 								] 
 							} 
 						},
-						"show": true,
+						"show": false,
 						"type": "tab" 
 					},
 					"view": {
@@ -60,7 +60,7 @@
 								] 
 							} 
 						},
-						"show": false,
+						"show": true,
 						"type": "tab" 
 					} 
 				},

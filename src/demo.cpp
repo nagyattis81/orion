@@ -73,9 +73,7 @@ void Demo::End(const double time) { fade.Render(time); }
 void Demo::Menu() {
   for (auto it : parts) {
     Part *part = it.second;
-    bool &show = part->parameter.show;
-    if (ImGui::MenuItem(part->name, nullptr, show))
-      show = !show;
+    part->parameter.HandleMenuItem(part->name);
   }
 }
 

@@ -1,6 +1,6 @@
 #include "part.hpp"
 
-Part::Part(const char *name) : name(name) { parameter.name = name; }
+Part::Part(const char *name) : name(name) { parameter.Set(name, TYPE_WINDOW); }
 
 bool Part::Load() { return parameter.LoadFromFile(); }
 
