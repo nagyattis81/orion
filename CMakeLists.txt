@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
+include(FetchContent)
 
 project(Demo)
 set(CMAKE_CXX_STANDARD 20)
-
 
 if (WIN32)
 	set(CMAKE_OSX_ARCHITECTURES x86_64)
@@ -58,7 +58,19 @@ else ()
 endif ()
 
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/stb)
-set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/glm/)
+
+##################################### GLM ######################################
+FetchContent_Declare(
+    glm
+    GIT_REPOSITORY https://github.com/g-truc/glm.git
+    GIT_TAG 1.0.1
+)
+FetchContent_GetProperties(glm)
+if(NOT glm_POPULATED)
+	FetchContent_Populate(glm)
+	set(COMMON_INCLUDES ${COMMON_INCLUDES} ${glm_SOURCE_DIR})
+endif()
+
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/spdlog/include)
 
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/glad/include)
