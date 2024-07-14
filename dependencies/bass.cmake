@@ -1,0 +1,8 @@
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/bass)
+if (WIN32)
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/bass/bass.lib)
+elseif (APPLE)
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/bass/libbass.dylib)
+else ()
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/bass/libbass.so)
+endif ()

@@ -1,0 +1,8 @@
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/assimp/include)
+if (WIN32)
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/assimp/assimp-vc143-mt.lib)
+elseif (APPLE)
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/assimp/libassimp.5.dylib)
+else ()
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/assimp/libassimp.so.5)
+endif ()

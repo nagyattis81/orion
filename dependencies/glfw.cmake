@@ -1,0 +1,8 @@
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/glfw/include)
+if (WIN32)
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/glfw/glfw3dll.lib)
+elseif (APPLE)
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/glfw/apple/libglfw3.a)
+else ()
+	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/glfw/linux/libglfw3.a)
+endif ()
