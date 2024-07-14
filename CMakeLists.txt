@@ -57,7 +57,16 @@ else ()
 	set(COMMON_LIBS ${COMMON_LIBS} ${CMAKE_SOURCE_DIR}/libs/bass/libbass.so)
 endif ()
 
-set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/stb)
+##################################### STB ######################################
+FetchContent_Declare(
+    stb
+    GIT_REPOSITORY https://github.com/nothings/stb.git
+)
+FetchContent_GetProperties(stb)
+if(NOT stb_POPULATED)
+	FetchContent_Populate(stb)
+	set(COMMON_INCLUDES ${COMMON_INCLUDES} ${stb_SOURCE_DIR})
+endif()
 
 ##################################### GLM ######################################
 FetchContent_Declare(
@@ -89,10 +98,18 @@ set(LIBS_SRC ${LIBS_SRC} ${LIBS_GLAD_SRC})
 source_group("Library Files\\glad" FILES ${LIBS_GLAD_SRC})
 
 
-set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/jsonxx)
-file(GLOB_RECURSE LIBS_JSONXX_SRC "libs/jsonxx/jsonxx.cc")
-set(LIBS_SRC ${LIBS_SRC} ${LIBS_JSONXX_SRC})
-source_group("Library Files\\jsonxx" FILES ${LIBS_JSONXX_SRC})
+#################################### JSONXX ####################################
+FetchContent_Declare(
+    jsonxx
+    GIT_REPOSITORY https://github.com/hjiang/jsonxx.git
+    GIT_TAG v1.0.1
+)
+FetchContent_GetProperties(jsonxx)
+if(NOT jsonxx_POPULATED)
+	FetchContent_Populate(jsonxx)
+	set(COMMON_INCLUDES ${COMMON_INCLUDES} ${jsonxx_SOURCE_DIR})
+	set(LIBS_SRC ${LIBS_SRC} ${jsonxx_SOURCE_DIR}/jsonxx.cc)
+endif()
 
 
 set(COMMON_INCLUDES ${COMMON_INCLUDES} ${CMAKE_SOURCE_DIR}/libs/assimp/include)
