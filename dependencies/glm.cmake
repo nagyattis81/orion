@@ -6,5 +6,6 @@ FetchContent_Declare(
 FetchContent_GetProperties(glm)
 if(NOT glm_POPULATED)
 	FetchContent_Populate(glm)
-	set(COMMON_INCLUDES ${COMMON_INCLUDES} ${glm_SOURCE_DIR})
 endif()
+
+set(COMMON_INCLUDES ${COMMON_INCLUDES} ${glm_SOURCE_DIR})
