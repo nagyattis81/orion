@@ -6,7 +6,6 @@ FetchContent_Declare(
 FetchContent_GetProperties(jsonxx)
 if(NOT jsonxx_POPULATED)
 	FetchContent_Populate(jsonxx)
+	set(COMMON_INCLUDES ${COMMON_INCLUDES} ${jsonxx_SOURCE_DIR})
+	set(LIBS_SRC ${LIBS_SRC} ${jsonxx_SOURCE_DIR}/jsonxx.cc)
 endif()
-
-set(COMMON_INCLUDES ${COMMON_INCLUDES} ${jsonxx_SOURCE_DIR})
-set(LIBS_SRC ${LIBS_SRC} ${jsonxx_SOURCE_DIR}/jsonxx.cc)

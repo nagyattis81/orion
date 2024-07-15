@@ -6,6 +6,5 @@ FetchContent_Declare(
 FetchContent_GetProperties(spdlog)
 if(NOT spdlog_POPULATED)
 	FetchContent_Populate(spdlog)
+	set(COMMON_INCLUDES ${COMMON_INCLUDES} ${spdlog_SOURCE_DIR}/include)
 endif()
-
-set(COMMON_INCLUDES ${COMMON_INCLUDES} ${spdlog_SOURCE_DIR}/include)

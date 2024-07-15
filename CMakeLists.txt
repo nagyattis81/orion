@@ -1,4 +1,3 @@
-# https://github.com/Hoshiningen/OpenGL-Template/blob/a4e3b662d5437448324f16235e59c4ded7fb33e7/CMakeLists.txt
 cmake_minimum_required(VERSION 3.10)
 include(FetchContent)
 
@@ -21,7 +20,6 @@ include(dependencies/jsonxx.cmake)
 include(dependencies/glad.cmake)
 include(dependencies/assimp.cmake)
 include(dependencies/imgui.cmake)
-# https://github.com/pantor/inja
 
 set(COMMON_SRC ${COMMON_SRC} ${LIBS_SRC})
 set(DEMO_EXE "demo")
