@@ -4,13 +4,20 @@
 #include <glm/gtc/type_ptr.hpp>
 
 Camera::Camera() {
-  parameters.Float("fovy", &fovy, 1.0f, 0.0f, 180.0f);
-  parameters.Float("aspect", &aspect, 0.001f, 1.0f, 2.0f);
-  parameters.Float("zNear", &zNear, 0.001f);
-  parameters.Float("zFar", &zFar);
-  parameters.Vec3("eye", &eye);
-  parameters.Vec3("center", &center);
-  parameters.Vec3("up", &up);
+  parameter.Set("camera", Type::TYPE_COLLAPSE);
+
+  viewParameter.Set("view", Type::TYPE_TAB);
+  viewParameter.Vec3("eye", &eye);
+  viewParameter.Vec3("center", &center);
+  viewParameter.Vec3("up", &up);
+  parameter.Group(&viewParameter);
+
+  projectionParameter.Set("projection", Type::TYPE_TAB);
+  projectionParameter.Float("fovy", &fovy);
+  projectionParameter.Float("aspect", &aspect);
+  projectionParameter.Float("zNear", &zNear);
+  projectionParameter.Float("zFar", &zFar);
+  parameter.Group(&projectionParameter);
 }
 
 void Camera::Ortho() {

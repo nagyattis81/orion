@@ -2,14 +2,14 @@
 
 #include "buffers.hpp"
 #include "color.hpp"
-#include "parameters/parameters.hpp"
+#include "parameter/parameter.hpp"
 #include "program.hpp"
 #include "vao.hpp"
 #include <glm/mat4x4.hpp>
 
 using namespace glm;
 
-class Camera;
+struct Camera;
 
 class Grid {
 private:
@@ -18,7 +18,7 @@ private:
   VBO vbo;
   GLint mvpLocation = -1;
   bool enable = true;
-  Parameters parameters = Parameters("grid");
+  Parameter parameter;
 
 public:
   Grid();
@@ -31,5 +31,4 @@ public:
   };
   bool Init(const InitParameters &initParameters);
   void Render(const Camera &camera, const mat4 &modelMatrix = mat4(1.0f));
-  Parameters *GetParameters() { return &parameters; }
 };
