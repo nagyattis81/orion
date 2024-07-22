@@ -8,11 +8,27 @@
 
 using namespace std;
 
+static void CallbackKey(GLFWwindow *window, int key, int, int action, int) {
+  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    glfwSetWindowShouldClose(window, GLFW_TRUE);
+  if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+    static bool play = true;
+    play = !play;
+    if (play)
+      Music::Instance()->Play();
+    else
+      Music::Instance()->Stop();
+  }
+}
+
 int main() {
 
   unique_ptr<Window> window(Window::Instance());
-  if (!window->Create(
-          {.title = "demo", .fullscreen = false, .vsync = false, .samples = 4}))
+  if (!window->Create({.title = "demo",
+                       .fullscreen = false,
+                       .vsync = false,
+                       .samples = 4,
+                       .keyCallback = CallbackKey}))
     return EXIT_FAILURE;
 
   unique_ptr<Demo> demo(Demo::Instance());

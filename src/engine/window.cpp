@@ -17,21 +17,8 @@ Window::~Window() {
   glfwTerminate();
 }
 
-static void callbackKey(GLFWwindow *window, int key, int, int action, int) {
-  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-    glfwSetWindowShouldClose(window, GLFW_TRUE);
-  if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
-    static bool play = true;
-    play = !play;
-    if (play)
-      Music::Instance()->Play();
-    else
-      Music::Instance()->Stop();
-  }
-}
-
-bool Window::Create(const Parameters &parameters) {
-  if (!parameters.title) {
+bool Window::Create(const CretaParameters &cretaParameters) {
+  if (!cretaParameters.title) {
     spdlog::critical("invalid window title!");
     return false;
   }
@@ -55,7 +42,7 @@ bool Window::Create(const Parameters &parameters) {
 
   unsigned int width = mode->width;
   unsigned int height = mode->height;
-  if (!parameters.fullscreen) {
+  if (!cretaParameters.fullscreen) {
     width = static_cast<unsigned int>(mode->width * 0.75f);
     height = static_cast<unsigned int>(mode->height * 0.75f);
   }
@@ -65,25 +52,28 @@ bool Window::Create(const Parameters &parameters) {
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-  if (parameters.samples > 0)
-    glfwWindowHint(GLFW_SAMPLES, parameters.samples);
-  window = glfwCreateWindow(width, height, parameters.title,
-                            parameters.fullscreen ? monitor : nullptr, nullptr);
+  if (cretaParameters.samples > 0)
+    glfwWindowHint(GLFW_SAMPLES, cretaParameters.samples);
+  window =
+      glfwCreateWindow(width, height, cretaParameters.title,
+                       cretaParameters.fullscreen ? monitor : nullptr, nullptr);
   if (!window) {
     spdlog::critical("create window error!");
     return false;
   }
 
-  if (!parameters.fullscreen) {
+  if (!cretaParameters.fullscreen) {
     glfwSetWindowPos(window, mode->width / 2 - width / 2,
                      mode->height / 2 - height / 2);
   } else {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
   }
 
-  glfwSetKeyCallback(window, callbackKey);
+  if (cretaParameters.keyCallback)
+    glfwSetKeyCallback(window, cretaParameters.keyCallback);
+
   glfwMakeContextCurrent(window);
-  glfwSwapInterval(parameters.vsync ? 1 : 0);
+  glfwSwapInterval(cretaParameters.vsync ? 1 : 0);
 
   int version = gladLoadGL();
   if (version == 0) {
@@ -96,7 +86,7 @@ bool Window::Create(const Parameters &parameters) {
   spdlog::info("GL_RENDERER {0}", (const char *)(glGetString(GL_RENDERER)));
   spdlog::info("GL_VERSION  {0}", (const char *)(glGetString(GL_VERSION)));
 
-  if (parameters.samples > 0)
+  if (cretaParameters.samples > 0)
     glEnable(GL_MULTISAMPLE);
 
   return true;
