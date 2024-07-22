@@ -16,7 +16,7 @@ bool GUI::Init(GLFWwindow *window) {
   ImGui::CreateContext();
   ImGuiIO &io = ImGui::GetIO();
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-  io.FontGlobalScale = 2.0;
+  io.FontGlobalScale = 1.5;
   ImGui::StyleColorsDark();
   ImGui_ImplGlfw_InitForOpenGL(window, true);
   ImGui_ImplOpenGL3_Init("#version 150");

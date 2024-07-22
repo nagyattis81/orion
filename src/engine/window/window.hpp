@@ -4,12 +4,12 @@
 
 class Window {
 public:
-  static Window *Instance();
-
   ~Window();
   struct CretaParameters {
     const char *title = nullptr;
     bool fullscreen = false;
+    int width = -1;
+    int height = -1;
     bool vsync = true;
     unsigned char samples = 0;
     GLFWkeyfun keyCallback = nullptr;
@@ -24,7 +24,9 @@ public:
   void SetWindowTitle(const char *title);
   GLFWwindow *GetHandle() const;
 
+  void MakeContextCurrent() const;
+  ;
+
 private:
-  inline static Window *instance = nullptr;
   GLFWwindow *window = nullptr;
 };

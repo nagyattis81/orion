@@ -1,15 +1,9 @@
 #include "spdlog/spdlog.h"
 #include <glad/glad.h>
 
-#include "music.hpp"
+#include "./../music.hpp"
 #include "window.hpp"
 #include <GLFW/glfw3.h>
-
-Window *Window::Instance() {
-  if (!instance)
-    instance = new Window();
-  return instance;
-}
 
 Window::~Window() {
   if (window)
@@ -43,8 +37,12 @@ bool Window::Create(const CretaParameters &cretaParameters) {
   unsigned int width = mode->width;
   unsigned int height = mode->height;
   if (!cretaParameters.fullscreen) {
-    width = static_cast<unsigned int>(mode->width * 0.75f);
-    height = static_cast<unsigned int>(mode->height * 0.75f);
+    width = static_cast<unsigned int>(cretaParameters.width < 0
+                                          ? mode->width * 0.75f
+                                          : cretaParameters.width);
+    height = static_cast<unsigned int>(cretaParameters.height < 0
+                                           ? mode->height * 0.75f
+                                           : cretaParameters.height);
   }
 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -113,3 +111,5 @@ void Window::SetWindowTitle(const char *title) {
 }
 
 GLFWwindow *Window::GetHandle() const { return window; }
+
+void Window::MakeContextCurrent() const { glfwMakeContextCurrent(window); }
