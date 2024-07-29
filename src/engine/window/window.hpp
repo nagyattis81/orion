@@ -15,7 +15,9 @@ public:
     GLFWkeyfun keyCallback = nullptr;
   };
 
-  bool Create(const CretaParameters &cretaParameters);
+  virtual bool Create(const CretaParameters &cretaParameters);
+  virtual void Render() {}
+  virtual void Delete() {}
 
   bool Open() const;
   void SwapBuffers() const;
