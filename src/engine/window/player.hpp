@@ -12,5 +12,5 @@ private:
 
 public:
   bool Create(const CretaParameters &cretaParameters) override;
-  void Render() override;
+  void Render();
 };

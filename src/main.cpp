@@ -3,29 +3,30 @@
 #include <cstdlib>
 
 int main() {
-  Editor editor;
+
+  Editor editor(true);
+
   if (!editor.Create({.title = "editor",
                       .fullscreen = false,
-                      .width = 1920,
-                      .height = 1080,
+                      .width = 360,
+                      .height = 640,
                       .vsync = false}))
     return EXIT_FAILURE;
 
   Player player;
   if (!player.Create({.title = "demo",
                       .fullscreen = false,
-                      .width = 1920,
-                      .height = 1080,
+                      .width = 1280,
+                      .height = 720,
                       .vsync = true,
                       .samples = 4}))
     return EXIT_FAILURE;
 
-  while (player.Open() && editor.Open()) {
+  while (player.Open()) {
     player.Render();
-    editor.Render();
+    if (editor.Render())
+      break;
   }
-
-  editor.Delete();
 
   return EXIT_SUCCESS;
 }
