@@ -16,8 +16,7 @@ public:
   };
 
   virtual bool Create(const CretaParameters &cretaParameters);
-  virtual void Render() {}
-  virtual void Delete() {}
+  virtual void Render() = 0;
 
   bool Open() const;
   void SwapBuffers() const;
