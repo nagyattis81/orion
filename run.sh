@@ -4,4 +4,4 @@ cd out
 cmake ../
 cmake --build . --config Release
 cd ..
-./out/demo
+./out/demo --editor

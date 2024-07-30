@@ -20,6 +20,7 @@ include(libs/jsonxx.cmake)
 include(libs/glad.cmake)
 include(libs/assimp.cmake)
 include(libs/imgui.cmake)
+include(libs/argparse.cmake)
 
 set(COMMON_SRC ${COMMON_SRC} ${LIBS_SRC})
 set(DEMO_EXE "demo")

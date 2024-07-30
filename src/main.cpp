@@ -1,10 +1,26 @@
+#include <argparse/argparse.hpp>
+
 #include "engine/window/editor.hpp"
 #include "engine/window/player.hpp"
 #include <cstdlib>
 
-int main() {
+int main(int argc, char *argv[]) {
+  argparse::ArgumentParser program("orion");
 
-  Editor editor(true);
+  program.add_argument("--editor")
+      .help("editor mode")
+      .default_value(false)
+      .implicit_value(true);
+
+  try {
+    program.parse_args(argc, argv);
+  } catch (const std::exception &err) {
+    std::cerr << err.what() << std::endl;
+    std::cerr << program;
+    std::exit(1);
+  }
+
+  Editor editor(program["--editor"] == true);
 
   if (!editor.Create({.title = "editor",
                       .fullscreen = false,
