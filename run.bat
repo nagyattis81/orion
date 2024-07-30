@@ -4,4 +4,4 @@ cd out
 cmake ../
 cmake --build . --config Release
 cd ..
-.\out\Release\demo.exe
+.\out\Release\demo.exe --editor

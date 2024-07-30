@@ -11,6 +11,6 @@ private:
   Demo *demo = nullptr;
 
 public:
-  bool Create(const CretaParameters &cretaParameters) override;
+  bool Create(const CreateParameters *createParameters) override;
   void Render();
 };

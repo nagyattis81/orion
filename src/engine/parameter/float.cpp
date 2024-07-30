@@ -1,4 +1,5 @@
 #include "float.hpp"
+#include "../json.hpp"
 #include <imgui.h>
 
 void Float::GUI() {
@@ -6,8 +7,8 @@ void Float::GUI() {
                    ImGuiSliderFlags_AlwaysClamp);
 }
 
-void Float::Load(const jsonxx::Array &arr) {
-  *value = static_cast<float>(arr.get<jsonxx::Number>(0));
+void Float::Load(const jsonxx::Array &array) {
+  JSON::ArrayTofloat(*value, array);
 }
 
-void Float::Save(jsonxx::Array &arr) { arr << *value; }
+void Float::Save(jsonxx::Array &array) { JSON::floatToArray(*value, array); }

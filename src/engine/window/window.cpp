@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 
 #include "./../music.hpp"
+#include "create-parameters.struct.hpp"
 #include "window.hpp"
 #include <GLFW/glfw3.h>
 
@@ -11,8 +12,10 @@ Window::~Window() {
   glfwTerminate();
 }
 
-bool Window::Create(const CretaParameters &cretaParameters) {
-  if (!cretaParameters.title) {
+bool Window::Create(const CreateParameters *createParameters) {
+  if (!createParameters)
+    return false;
+  if (!createParameters->title) {
     spdlog::critical("invalid window title!");
     return false;
   }
@@ -36,42 +39,45 @@ bool Window::Create(const CretaParameters &cretaParameters) {
 
   unsigned int width = mode->width;
   unsigned int height = mode->height;
-  if (!cretaParameters.fullscreen) {
-    width = static_cast<unsigned int>(cretaParameters.width < 0
+  if (!createParameters->fullscreen) {
+    width = static_cast<unsigned int>(createParameters->width < 0
                                           ? mode->width * 0.75f
-                                          : cretaParameters.width);
-    height = static_cast<unsigned int>(cretaParameters.height < 0
+                                          : createParameters->width);
+    height = static_cast<unsigned int>(createParameters->height < 0
                                            ? mode->height * 0.75f
-                                           : cretaParameters.height);
+                                           : createParameters->height);
   }
 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-  if (cretaParameters.samples > 0)
-    glfwWindowHint(GLFW_SAMPLES, cretaParameters.samples);
-  window =
-      glfwCreateWindow(width, height, cretaParameters.title,
-                       cretaParameters.fullscreen ? monitor : nullptr, nullptr);
+  glfwWindowHint(GLFW_RESIZABLE, createParameters->resize);
+  if (createParameters->samples > 0)
+    glfwWindowHint(GLFW_SAMPLES, createParameters->samples);
+  window = glfwCreateWindow(width, height, createParameters->title,
+                            createParameters->fullscreen ? monitor : nullptr,
+                            nullptr);
   if (!window) {
     spdlog::critical("create window error!");
     return false;
   }
 
-  if (!cretaParameters.fullscreen) {
-    glfwSetWindowPos(window, mode->width / 2 - width / 2,
-                     mode->height / 2 - height / 2);
+  if (!createParameters->fullscreen) {
+    glfwSetWindowPos(window,
+                     createParameters->x < 0 ? mode->width / 2 - width / 2
+                                             : createParameters->x,
+                     createParameters->y < 0 ? mode->height / 2 - height / 2
+                                             : createParameters->y);
   } else {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
   }
 
-  if (cretaParameters.keyCallback)
-    glfwSetKeyCallback(window, cretaParameters.keyCallback);
+  if (createParameters->keyCallback)
+    glfwSetKeyCallback(window, createParameters->keyCallback);
 
   glfwMakeContextCurrent(window);
-  glfwSwapInterval(cretaParameters.vsync ? 1 : 0);
+  glfwSwapInterval(createParameters->vsync ? 1 : 0);
 
   int version = gladLoadGL();
   if (version == 0) {
@@ -84,7 +90,7 @@ bool Window::Create(const CretaParameters &cretaParameters) {
   spdlog::info("GL_RENDERER {0}", (const char *)(glGetString(GL_RENDERER)));
   spdlog::info("GL_VERSION  {0}", (const char *)(glGetString(GL_VERSION)));
 
-  if (cretaParameters.samples > 0)
+  if (createParameters->samples > 0)
     glEnable(GL_MULTISAMPLE);
 
   return true;
@@ -113,3 +119,14 @@ void Window::SetWindowTitle(const char *title) {
 GLFWwindow *Window::GetHandle() const { return window; }
 
 void Window::MakeContextCurrent() const { glfwMakeContextCurrent(window); }
+
+ivec2 Window::GetPosition() const {
+  ivec2 position;
+  glfwGetWindowPos(window, &position.x, &position.y);
+  return position;
+}
+ivec2 Window::GetSize() const {
+  ivec2 size;
+  glfwGetWindowSize(window, &size.x, &size.y);
+  return size;
+}

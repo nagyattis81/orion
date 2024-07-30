@@ -3,14 +3,23 @@
 #include "../gui.hpp"
 #include "window.hpp"
 
+class Player;
+
 class Editor : public Window {
 private:
   bool disable = false;
   GUI gui;
+  Player *player = nullptr;
+  CreateParameters *playerCreateParameters = nullptr;
+
+  bool Load(CreateParameters &createParameters);
+  void Save();
 
 public:
   Editor(const bool enable);
-  bool Create(const CretaParameters &cretaParameters) override;
+  void SetPlayer(Player *player);
+  bool Create(const CreateParameters *createParameters) override;
   bool Render();
   void Delete();
+  CreateParameters *GetPlayerCreateParameters(const char *title);
 };

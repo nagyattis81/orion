@@ -45,6 +45,6 @@ public:
   void HandleMenuItem(const char *name);
 
   virtual void GUI();
-  virtual void Load(const jsonxx::Array &arr) {}
-  virtual void Save(jsonxx::Array &arr) {}
+  virtual void Load(const jsonxx::Array &array) {}
+  virtual void Save(jsonxx::Array &array) {}
 };

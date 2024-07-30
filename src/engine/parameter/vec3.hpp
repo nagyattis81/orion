@@ -8,6 +8,6 @@ using namespace glm;
 struct Vec3 : public Parameter {
   vec3 *value = nullptr;
   void GUI() override;
-  void Load(const jsonxx::Array &arr) override;
-  void Save(jsonxx::Array &arr) override;
+  void Load(const jsonxx::Array &array) override;
+  void Save(jsonxx::Array &array) override;
 };

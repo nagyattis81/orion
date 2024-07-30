@@ -3,6 +3,7 @@
 #include "../../demo.hpp"
 #include "../../engine/music.hpp"
 
+#include "create-parameters.struct.hpp"
 #include "player.hpp"
 
 static void CallbackKey(GLFWwindow *window, int key, int, int action, int) {
@@ -19,12 +20,12 @@ static void CallbackKey(GLFWwindow *window, int key, int, int action, int) {
   }
 }
 
-bool Player::Create(const CretaParameters &cretaParameters) {
+bool Player::Create(const CreateParameters *createParameters) {
 
-  CretaParameters newCretaParameters = cretaParameters;
-  newCretaParameters.keyCallback = CallbackKey;
+  CreateParameters newCreateParameters = *createParameters;
+  newCreateParameters.keyCallback = CallbackKey;
 
-  if (!Window::Create(newCretaParameters))
+  if (!Window::Create(&newCreateParameters))
     return false;
 
   demo = Demo::Instance();
