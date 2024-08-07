@@ -1,8 +1,8 @@
 
 #include "demo.hpp"
 #include "engine/camera.hpp"
-#include "engine/color.hpp"
-#include "engine/geometry.hpp"
+#include "engine/constants/color.hpp"
+#include "engine/constants/geometry.hpp"
 #include "engine/part.hpp"
 #include "engine/sprite.hpp"
 #include <glad/glad.h>

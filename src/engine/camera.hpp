@@ -1,7 +1,7 @@
 #pragma once
 
 #include "./../demo.hpp"
-#include "geometry.hpp"
+#include "constants/geometry.hpp"
 #include "parameter/parameter.hpp"
 #include <glad/glad.h>
 #include <glm/mat4x4.hpp>

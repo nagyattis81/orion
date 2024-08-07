@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-#include "./../../texture2d.hpp"
+#include "./../../gl/texture2d.hpp"
 #include <assimp/scene.h>
 #include <map>
 

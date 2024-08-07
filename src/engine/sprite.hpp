@@ -1,9 +1,9 @@
 #pragma once
 
-#include "buffers.hpp"
-#include "program.hpp"
-#include "texture2d.hpp"
-#include "vao.hpp"
+#include "gl/buffers.hpp"
+#include "gl/program.hpp"
+#include "gl/texture2d.hpp"
+#include "gl/vao.hpp"
 #include <glm/mat4x4.hpp>
 
 using namespace glm;

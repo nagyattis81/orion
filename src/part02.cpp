@@ -1,6 +1,6 @@
 #include "engine/camera.hpp"
-#include "engine/color.hpp"
-#include "engine/geometry.hpp"
+#include "engine/constants/color.hpp"
+#include "engine/constants/geometry.hpp"
 #include "engine/grid.hpp"
 #include "engine/model.hpp"
 #include "engine/part.hpp"

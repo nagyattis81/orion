@@ -1,7 +1,7 @@
 #pragma once
 
-#include "./../buffers.hpp"
-#include "./../vao.hpp"
+#include "./../gl/buffers.hpp"
+#include "./../gl/vao.hpp"
 #include "material/material.hpp"
 
 struct Mesh {

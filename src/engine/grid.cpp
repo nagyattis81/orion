@@ -1,7 +1,7 @@
 #include "grid.hpp"
 
 #include "camera.hpp"
-#include "geometry.hpp"
+#include "constants/geometry.hpp"
 #include <glm/vec3.hpp>
 
 using namespace std;
