@@ -30,7 +30,7 @@ public:
   static Demo *Instance();
 
   bool Init();
-  void Delete();
+  void Save();
 
   void Render(const double time);
   void End(const double time);

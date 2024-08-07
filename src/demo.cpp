@@ -33,7 +33,7 @@ bool Demo::Init() {
   return InitParts();
 }
 
-void Demo::Delete() {
+void Demo::Save() {
   for (auto it : parts)
     it.second->Save();
 }

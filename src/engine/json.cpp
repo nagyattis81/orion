@@ -42,6 +42,16 @@ void ArrayTofloat(float &value, const jsonxx::Array &array) {
   value = static_cast<float>(array.get<jsonxx::Number>(0));
 }
 
+void SaveFloat(jsonxx::Object &object, const string &name, const float value) {
+  object << name << value;
+}
+
+void LoadFloat(const jsonxx::Object &object, const string &name, float &value) {
+  if (!object.has<jsonxx::Number>(name))
+    return;
+  value = static_cast<float>(object.get<jsonxx::Number>(name));
+}
+
 jsonxx::Object *Load(const string &fileName) {
   spdlog::info("*** Load {}", fileName);
   ifstream file(fileName);

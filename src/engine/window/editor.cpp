@@ -4,16 +4,14 @@
 
 #include "../../engine/json.hpp"
 #include "../../engine/music.hpp"
-#include "../gui.hpp"
+#include "../gui/gui.hpp"
 #include "editor.hpp"
-#include "player.hpp"
-#include <fstream>
 #include <jsonxx.h>
 #include <memory>
 
 using namespace std;
 
-auto FILE_NAME = "data/editor.json";
+static auto FILE_NAME = "data/editor.json";
 
 Editor::Editor() {}
 
@@ -33,7 +31,7 @@ bool Editor::Init() {
 
   gui = GUI::Instance(window);
 
-  return gui && gui->Init(1.0f);
+  return gui && gui->Init();
 }
 
 void Editor::Start() {
@@ -43,7 +41,8 @@ void Editor::Start() {
     gui->Render();
     SwapBuffers();
   }
-  demo->Delete();
+  demo->Save();
+  gui->Save();
   Save();
 }
 
@@ -51,12 +50,10 @@ bool Editor::Load() {
   unique_ptr<jsonxx::Object> object(JSON::Load(FILE_NAME));
   if (!object)
     return true;
-
   return true;
 }
 
 void Editor::Save() {
-
   jsonxx::Object object;
   JSON::Save(FILE_NAME, object);
 }
