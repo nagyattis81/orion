@@ -2,9 +2,10 @@
 #include <glad/glad.h>
 
 #include "./../music.hpp"
-#include "create-parameters.struct.hpp"
 #include "window.hpp"
 #include <GLFW/glfw3.h>
+
+#include "../../demo.hpp"
 
 Window::~Window() {
   if (window)
@@ -12,10 +13,8 @@ Window::~Window() {
   glfwTerminate();
 }
 
-bool Window::Create(const CreateParameters *createParameters) {
-  if (!createParameters)
-    return false;
-  if (!createParameters->title) {
+bool Window::Create(const CreateParameters &createParameters) {
+  if (!createParameters.title) {
     spdlog::critical("invalid window title!");
     return false;
   }
@@ -39,45 +38,45 @@ bool Window::Create(const CreateParameters *createParameters) {
 
   unsigned int width = mode->width;
   unsigned int height = mode->height;
-  if (!createParameters->fullscreen) {
-    width = static_cast<unsigned int>(createParameters->width < 0
+  if (!createParameters.fullscreen) {
+    width = static_cast<unsigned int>(createParameters.width < 0
                                           ? mode->width * 0.75f
-                                          : createParameters->width);
-    height = static_cast<unsigned int>(createParameters->height < 0
+                                          : createParameters.width);
+    height = static_cast<unsigned int>(createParameters.height < 0
                                            ? mode->height * 0.75f
-                                           : createParameters->height);
+                                           : createParameters.height);
   }
 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_RESIZABLE, createParameters->resize);
-  if (createParameters->samples > 0)
-    glfwWindowHint(GLFW_SAMPLES, createParameters->samples);
-  window = glfwCreateWindow(width, height, createParameters->title,
-                            createParameters->fullscreen ? monitor : nullptr,
+  glfwWindowHint(GLFW_RESIZABLE, createParameters.resize);
+  if (createParameters.samples > 0)
+    glfwWindowHint(GLFW_SAMPLES, createParameters.samples);
+  window = glfwCreateWindow(width, height, createParameters.title,
+                            createParameters.fullscreen ? monitor : nullptr,
                             nullptr);
   if (!window) {
     spdlog::critical("create window error!");
     return false;
   }
 
-  if (!createParameters->fullscreen) {
+  if (!createParameters.fullscreen) {
     glfwSetWindowPos(window,
-                     createParameters->x < 0 ? mode->width / 2 - width / 2
-                                             : createParameters->x,
-                     createParameters->y < 0 ? mode->height / 2 - height / 2
-                                             : createParameters->y);
+                     createParameters.x < 0 ? mode->width / 2 - width / 2
+                                            : createParameters.x,
+                     createParameters.y < 0 ? mode->height / 2 - height / 2
+                                            : createParameters.y);
   } else {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
   }
 
-  if (createParameters->keyCallback)
-    glfwSetKeyCallback(window, createParameters->keyCallback);
+  if (createParameters.keyCallback)
+    glfwSetKeyCallback(window, createParameters.keyCallback);
 
   glfwMakeContextCurrent(window);
-  glfwSwapInterval(createParameters->vsync ? 1 : 0);
+  glfwSwapInterval(createParameters.vsync ? 1 : 0);
 
   int version = gladLoadGL();
   if (version == 0) {
@@ -90,8 +89,20 @@ bool Window::Create(const CreateParameters *createParameters) {
   spdlog::info("GL_RENDERER {0}", (const char *)(glGetString(GL_RENDERER)));
   spdlog::info("GL_VERSION  {0}", (const char *)(glGetString(GL_VERSION)));
 
-  if (createParameters->samples > 0)
+  if (createParameters.samples > 0)
     glEnable(GL_MULTISAMPLE);
+
+  demo = Demo::Instance();
+  spdlog::info("!!! Demo init");
+  if (!demo->Init())
+    return false;
+
+  music = Music::Instance();
+  if (!music->Load({.path = Demo::MUSIC, .volume = Demo::MUTE ? 0.0f : 1.0f}))
+    return false;
+
+  music->SetTime(Demo::OFFSET);
+  music->Play();
 
   return true;
 }
@@ -116,7 +127,11 @@ void Window::SetWindowTitle(const char *title) {
     glfwSetWindowTitle(window, title);
 }
 
-GLFWwindow *Window::GetHandle() const { return window; }
+void Window::Render() {
+  const double time = music->GetTime();
+  demo->Render(time);
+  demo->End(time);
+}
 
 void Window::MakeContextCurrent() const { glfwMakeContextCurrent(window); }
 

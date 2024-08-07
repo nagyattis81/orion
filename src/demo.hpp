@@ -19,7 +19,6 @@ public:
 
 private:
   inline static Demo *instance = nullptr;
-  // TODO FBO (main target)
   map<double, Part *> parts;
   Sprite logo;
   Fade fade;
@@ -33,7 +32,6 @@ public:
   bool Init();
   void Delete();
 
-  void Begin(const double time);
   void Render(const double time);
   void End(const double time);
 

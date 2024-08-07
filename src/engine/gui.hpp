@@ -11,6 +11,6 @@ private:
 public:
   static GUI *Instance(GLFWwindow *window);
 
-  bool Init();
+  bool Init(const float scale);
   void Render();
 };

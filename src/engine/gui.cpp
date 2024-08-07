@@ -11,14 +11,14 @@ GUI *GUI::Instance(GLFWwindow *window) {
 
 GUI::GUI(GLFWwindow *window) : window(window) {}
 
-bool GUI::Init() {
+bool GUI::Init(const float scale) {
   if (!window)
     return false;
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImGuiIO &io = ImGui::GetIO();
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-  io.FontGlobalScale = 1.5;
+  io.FontGlobalScale = scale;
   ImGui::StyleColorsDark();
   ImGui_ImplGlfw_InitForOpenGL(window, true);
   ImGui_ImplOpenGL3_Init("#version 150");

@@ -30,7 +30,7 @@
 								] 
 							} 
 						},
-						"show": true,
+						"show": false,
 						"type": "tab" 
 					},
 					"view": {
@@ -64,15 +64,15 @@
 						"type": "tab" 
 					} 
 				},
-				"show": true,
+				"show": false,
 				"type": "collapse" 
 			},
 			"clearColor": {
 				"type": "color3",
 				"value": [
-					0.1934282034635544,
-					0.2540065348148346,
-					0.7894736528396606 
+					0.5735294222831726,
+					0.3373702168464661,
+					0.3373702168464661 
 				] 
 			},
 			"scaleModel": {

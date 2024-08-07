@@ -3,7 +3,6 @@
 #include "../../demo.hpp"
 #include "../../engine/music.hpp"
 
-#include "create-parameters.struct.hpp"
 #include "player.hpp"
 
 static void CallbackKey(GLFWwindow *window, int key, int, int action, int) {
@@ -20,35 +19,24 @@ static void CallbackKey(GLFWwindow *window, int key, int, int action, int) {
   }
 }
 
-bool Player::Create(const CreateParameters *createParameters) {
-
-  CreateParameters newCreateParameters = *createParameters;
-  newCreateParameters.keyCallback = CallbackKey;
-
-  if (!Window::Create(&newCreateParameters))
+bool Player::Init() {
+  if (!Create({
+          .title = "player",
+          .fullscreen = false,
+          .width = 1280,
+          .height = 720,
+          .vsync = true,
+          .keyCallback = CallbackKey,
+          .resize = false,
+      }))
     return false;
-
-  demo = Demo::Instance();
-  spdlog::info("!!! Demo init");
-  if (!demo->Init())
-    return false;
-
-  music = Music::Instance();
-  if (!music->Load({.path = Demo::MUSIC, .volume = Demo::MUTE ? 0.0f : 1.0f}))
-    return false;
-
-  music->SetTime(Demo::OFFSET);
-  music->Play();
   return true;
 }
 
-void Player::Render() {
-  MakeContextCurrent();
-  PollEvents();
-  const double time = music->GetTime();
-  demo->Begin(time);
-  demo->Render(time);
-  demo->End(time);
-  PollEvents();
-  SwapBuffers();
+void Player::Start() {
+  while (Open()) {
+    Render();
+    PollEvents();
+    SwapBuffers();
+  }
 }

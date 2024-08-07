@@ -58,10 +58,6 @@ bool Demo::InitParts() {
   return true;
 }
 
-void Demo::Begin(const double time) {
-  // TODO implementation
-}
-
 void Demo::Render(const double time) {
   for (auto it : parts)
     if (it.second->start <= time && time < it.second->end)

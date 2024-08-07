@@ -2,15 +2,8 @@
 
 #include "window.hpp"
 
-class Music;
-class Demo;
-
 class Player : public Window {
-private:
-  Music *music = nullptr;
-  Demo *demo = nullptr;
-
 public:
-  bool Create(const CreateParameters *createParameters) override;
-  void Render();
+  bool Init() override;
+  void Start() override;
 };
