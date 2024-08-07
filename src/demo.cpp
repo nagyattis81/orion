@@ -59,7 +59,7 @@ bool Demo::InitParts() {
 }
 
 void Demo::Begin(const double time) {
-  // TODO
+  // TODO implementation
 }
 
 void Demo::Render(const double time) {

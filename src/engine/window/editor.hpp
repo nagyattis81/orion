@@ -3,6 +3,8 @@
 #include "../gui.hpp"
 #include "window.hpp"
 
+// TODO delete this file
+
 class Player;
 
 class Editor : public Window {
