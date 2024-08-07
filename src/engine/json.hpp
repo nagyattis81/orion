@@ -22,6 +22,6 @@ void ArrayTovec3(vec3 &value, const jsonxx::Array &array);
 void floatToArray(const float value, jsonxx::Array &array);
 void ArrayTofloat(float &value, const jsonxx::Array &array);
 
-jsonxx::Object *Load(const char *fileName);
-void Save(const char *fileName, const jsonxx::Object &object);
+jsonxx::Object *Load(const string &fileName);
+void Save(const string &fileName, const jsonxx::Object &object);
 } // namespace JSON

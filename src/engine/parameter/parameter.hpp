@@ -33,6 +33,7 @@ protected:
   string name = "";
 
 public:
+  string GetFileName() const;
   bool LoadFromFile();
   void SaveToFile();
   void Color3(const char *name, vec3 *color);

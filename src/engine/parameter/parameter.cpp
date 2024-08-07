@@ -1,4 +1,5 @@
 #include "parameter.hpp"
+#include "./../json.hpp"
 #include "color3.hpp"
 #include "constants.hpp"
 #include "float.hpp"
@@ -8,38 +9,24 @@
 #include <fstream>
 #include <imgui.h>
 #include <jsonxx.h>
+#include <memory>
+
+string Parameter::GetFileName() const {
+  return Constants::FOLDER + string(name) + ".json";
+}
 
 bool Parameter::LoadFromFile() {
-  const string fileName = Constants::FOLDER + string(name) + ".json";
-  spdlog::info("*** Load {}", fileName);
-  ifstream file(fileName); // TODO unique_ptr<jsonxx::Object>
-                           // object(JSON::Load(FILE_NAME));
-  std::string str((std::istreambuf_iterator<char>(file)),
-                  std::istreambuf_iterator<char>());
-  if (!file.is_open())
-    return true;
-  jsonxx::Object object;
-  if (!object.parse(str))
+  unique_ptr<jsonxx::Object> object(JSON::Load(GetFileName()));
+  if (!object)
     return false;
-  LoadFromObject(object, this);
+  LoadFromObject(*object, this);
   return true;
 }
 
 void Parameter::SaveToFile() {
-  filesystem::create_directory(Constants::FOLDER);
-  const string fileName = Constants::FOLDER + string(name) + ".json";
-  spdlog::info("*** Save {}", fileName);
-  fstream file; // TODO JSON::Save(FILE_NAME, saveObject);
-  file.open(fileName, ios::out);
-  if (!file.is_open()) {
-    spdlog::critical("open error!");
-    return;
-  }
   jsonxx::Object object;
   SaveToObject(object, this);
-  std::string str = object.json();
-  file << str;
-  file.close();
+  JSON::Save(GetFileName(), object);
 }
 
 void Parameter::HandleChildren(Parameter *parameter, const Type filterType) {

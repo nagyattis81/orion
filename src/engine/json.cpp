@@ -42,7 +42,7 @@ void ArrayTofloat(float &value, const jsonxx::Array &array) {
   value = static_cast<float>(array.get<jsonxx::Number>(0));
 }
 
-jsonxx::Object *Load(const char *fileName) {
+jsonxx::Object *Load(const string &fileName) {
   spdlog::info("*** Load {}", fileName);
   ifstream file(fileName);
   std::string str((std::istreambuf_iterator<char>(file)),
@@ -59,7 +59,7 @@ jsonxx::Object *Load(const char *fileName) {
   return object;
 }
 
-void Save(const char *fileName, const jsonxx::Object &object) {
+void Save(const string &fileName, const jsonxx::Object &object) {
   spdlog::info("*** Save {}", fileName);
   fstream file;
   file.open(fileName, ios::out);
