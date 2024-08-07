@@ -2,8 +2,6 @@
 
 #include "window.hpp"
 
-// TODO delete this file
-
 class Music;
 class Demo;
 

@@ -3,7 +3,17 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
-bool GUI::Init(GLFWwindow *window) {
+GUI *GUI::Instance(GLFWwindow *window) {
+  if (!instance)
+    instance = new GUI(window);
+  return instance;
+}
+
+GUI::GUI(GLFWwindow *window) : window(window) {}
+
+bool GUI::Init() {
+  if (!window)
+    return false;
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImGuiIO &io = ImGui::GetIO();
@@ -15,7 +25,7 @@ bool GUI::Init(GLFWwindow *window) {
   return true;
 }
 
-void GUI::Frame() {
+void GUI::Render() {
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
@@ -37,6 +47,5 @@ void GUI::Frame() {
     ImGui::ShowDemoWindow(&showDemoWindow);
   demo->Windows();
   ImGui::Render();
+  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
-
-void GUI::Render() { ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); }

@@ -1,16 +1,16 @@
 #pragma once
 
-#include "../gui.hpp"
 #include "window.hpp"
 
-// TODO delete this file
+// TODO ne legyen benne player window
 
 class Player;
+class GUI;
 
 class Editor : public Window {
 private:
   bool disable = false;
-  GUI gui;
+  GUI *gui = nullptr;
   Player *player = nullptr;
   CreateParameters *playerCreateParameters = nullptr;
 

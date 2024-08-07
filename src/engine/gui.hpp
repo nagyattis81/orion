@@ -3,9 +3,14 @@
 struct GLFWwindow;
 
 class GUI {
-  // TODO instance class
+private:
+  inline static GUI *instance = nullptr;
+  GLFWwindow *window = nullptr;
+  GUI(GLFWwindow *window);
+
 public:
-  bool Init(GLFWwindow *window);
-  void Frame();
+  static GUI *Instance(GLFWwindow *window);
+
+  bool Init();
   void Render();
 };

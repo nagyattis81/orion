@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
                               .resize = true}))
     return EXIT_FAILURE;
 
-  // TODO one window
+  // TODO ha editor mode akkor editor class ha demo mod akkor player
   Player player;
   if (!CreateWindow(&player, *editor.GetPlayerCreateParameters(NAME)))
     return EXIT_FAILURE;

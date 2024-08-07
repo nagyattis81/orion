@@ -4,6 +4,7 @@
 
 #include "../../engine/json.hpp"
 #include "../../engine/music.hpp"
+#include "../gui.hpp"
 #include "create-parameters.struct.hpp"
 #include "editor.hpp"
 #include "player.hpp"
@@ -37,7 +38,8 @@ bool Editor::Create(const CreateParameters *createParameters) {
 
   if (!Window::Create(&newCreateParameters))
     return false;
-  return gui.Init(GetHandle());
+  gui = GUI::Instance(GetHandle());
+  return gui && gui->Init();
 }
 
 bool Editor::Render() {
@@ -48,8 +50,7 @@ bool Editor::Render() {
   glClear(GL_COLOR_BUFFER_BIT);
 
   PollEvents();
-  gui.Frame();
-  gui.Render();
+  gui->Render();
   SwapBuffers();
 
   return !Open();
