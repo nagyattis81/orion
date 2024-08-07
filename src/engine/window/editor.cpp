@@ -9,6 +9,7 @@
 #include "player.hpp"
 #include <fstream>
 #include <jsonxx.h>
+#include <memory>
 
 using namespace std;
 
@@ -89,20 +90,14 @@ void ObjectToCreateParameters(const jsonxx::Object &sourceObject,
 }
 
 bool Editor::Load(CreateParameters &createParameters) {
-  spdlog::info("*** Load {}", FILE_NAME);
-  ifstream file(FILE_NAME);
-  std::string str((std::istreambuf_iterator<char>(file)),
-                  std::istreambuf_iterator<char>());
-  if (!file.is_open())
+  unique_ptr<jsonxx::Object> object(JSON::Load(FILE_NAME));
+  if (!object)
+    return true;
+
+  if (!object->has<jsonxx::Object>("window"))
     return false;
 
-  jsonxx::Object loadObject;
-  if (!loadObject.parse(str))
-    return false;
-
-  if (!loadObject.has<jsonxx::Object>("window"))
-    return false;
-  const auto windowObject = loadObject.get<jsonxx::Object>("window");
+  const auto windowObject = object->get<jsonxx::Object>("window");
   if (windowObject.has<jsonxx::Object>("editor"))
     ObjectToCreateParameters(windowObject.get<jsonxx::Object>("editor"),
                              "editor", createParameters);
@@ -113,21 +108,11 @@ bool Editor::Load(CreateParameters &createParameters) {
 }
 
 void Editor::Save() {
-  spdlog::info("*** Save {}", FILE_NAME);
-  fstream file;
-  file.open(FILE_NAME, ios::out);
-  if (!file.is_open()) {
-    spdlog::critical("open error!");
-    return;
-  }
 
   jsonxx::Object saveObject;
   jsonxx::Object windowObject;
   WindowToObject(this, "editor", windowObject);
   WindowToObject(player, "player", windowObject);
   saveObject << "window" << windowObject;
-  std::string str = saveObject.json();
-
-  file << str;
-  file.close();
+  JSON::Save(FILE_NAME, saveObject);
 }

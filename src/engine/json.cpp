@@ -1,5 +1,8 @@
+#include "spdlog/spdlog.h"
+
 #include "json.hpp"
 
+#include <fstream>
 #include <jsonxx.h>
 
 namespace JSON {
@@ -39,4 +42,33 @@ void ArrayTofloat(float &value, const jsonxx::Array &array) {
   value = static_cast<float>(array.get<jsonxx::Number>(0));
 }
 
+jsonxx::Object *Load(const char *fileName) {
+  spdlog::info("*** Load {}", fileName);
+  ifstream file(fileName);
+  std::string str((std::istreambuf_iterator<char>(file)),
+                  std::istreambuf_iterator<char>());
+  if (!file.is_open())
+    return nullptr;
+
+  jsonxx::Object *object = new jsonxx::Object();
+  if (!object->parse(str)) {
+    delete object;
+    return nullptr;
+  }
+
+  return object;
+}
+
+void Save(const char *fileName, const jsonxx::Object &object) {
+  spdlog::info("*** Save {}", fileName);
+  fstream file;
+  file.open(fileName, ios::out);
+  if (!file.is_open()) {
+    spdlog::critical("open error!");
+    return;
+  }
+  std::string str = object.json();
+  file << str;
+  file.close();
+}
 } // namespace JSON

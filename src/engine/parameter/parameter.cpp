@@ -12,7 +12,8 @@
 bool Parameter::LoadFromFile() {
   const string fileName = Constants::FOLDER + string(name) + ".json";
   spdlog::info("*** Load {}", fileName);
-  ifstream file(fileName);
+  ifstream file(fileName); // TODO unique_ptr<jsonxx::Object>
+                           // object(JSON::Load(FILE_NAME));
   std::string str((std::istreambuf_iterator<char>(file)),
                   std::istreambuf_iterator<char>());
   if (!file.is_open())
@@ -28,7 +29,7 @@ void Parameter::SaveToFile() {
   filesystem::create_directory(Constants::FOLDER);
   const string fileName = Constants::FOLDER + string(name) + ".json";
   spdlog::info("*** Save {}", fileName);
-  fstream file;
+  fstream file; // TODO JSON::Save(FILE_NAME, saveObject);
   file.open(fileName, ios::out);
   if (!file.is_open()) {
     spdlog::critical("open error!");
