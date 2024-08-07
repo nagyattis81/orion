@@ -19,6 +19,7 @@ public:
 
 private:
   inline static Demo *instance = nullptr;
+  // TODO FBO (main target)
   map<double, Part *> parts;
   Sprite logo;
   Fade fade;

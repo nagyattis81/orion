@@ -80,10 +80,4 @@ void Demo::Menu() {
 void Demo::Windows() {
   for (auto it : parts)
     it.second->parameter.GUI();
-  /* if (!part->showWindow)
-    continue;
-  if (ImGui::Begin(part->name, &part->showWindow)) {
-    part->GUI();
-    ImGui::End();
-  } */
 }
