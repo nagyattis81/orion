@@ -12,7 +12,7 @@ class Object;
 class Array;
 } // namespace jsonxx
 
-namespace JSON {
+namespace json {
 void ivec2ToObject(const ivec2 &value, const string &name,
                    jsonxx::Object &object);
 void ObjectToivec2(ivec2 &value, const string &name,
@@ -24,6 +24,6 @@ void ArrayTofloat(float &value, const jsonxx::Array &array);
 void SaveFloat(jsonxx::Object &object, const string &name, const float value);
 void LoadFloat(const jsonxx::Object &object, const string &name, float &value);
 
-jsonxx::Object *Load(const string &fileName);
-void Save(const string &fileName, const jsonxx::Object &object);
-} // namespace JSON
+jsonxx::Object *LoadFromFile(const string &fileName);
+void SaveToFile(const string &fileName, const jsonxx::Object &object);
+} // namespace json

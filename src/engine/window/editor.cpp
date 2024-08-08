@@ -46,7 +46,7 @@ void Editor::Start() {
 }
 
 bool Editor::Load() {
-  unique_ptr<jsonxx::Object> object(JSON::Load(FILE_NAME));
+  unique_ptr<jsonxx::Object> object(json::LoadFromFile(FILE_NAME));
   if (!object)
     return true;
   return true;
@@ -54,5 +54,5 @@ bool Editor::Load() {
 
 void Editor::Save() {
   jsonxx::Object object;
-  JSON::Save(FILE_NAME, object);
+  json::SaveToFile(FILE_NAME, object);
 }

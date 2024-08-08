@@ -8,7 +8,7 @@ void Float::GUI() {
 }
 
 void Float::Load(const jsonxx::Array &array) {
-  JSON::ArrayTofloat(*value, array);
+  json::ArrayTofloat(*value, array);
 }
 
-void Float::Save(jsonxx::Array &array) { JSON::floatToArray(*value, array); }
+void Float::Save(jsonxx::Array &array) { json::floatToArray(*value, array); }

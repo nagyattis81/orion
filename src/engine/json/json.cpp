@@ -5,7 +5,7 @@
 #include <fstream>
 #include <jsonxx.h>
 
-namespace JSON {
+namespace json {
 
 void ivec2ToObject(const ivec2 &value, const string &name,
                    jsonxx::Object &object) {
@@ -52,7 +52,7 @@ void LoadFloat(const jsonxx::Object &object, const string &name, float &value) {
   value = static_cast<float>(object.get<jsonxx::Number>(name));
 }
 
-jsonxx::Object *Load(const string &fileName) {
+jsonxx::Object *LoadFromFile(const string &fileName) {
   spdlog::info("*** Load {}", fileName);
   ifstream file(fileName);
   std::string str((std::istreambuf_iterator<char>(file)),
@@ -69,7 +69,7 @@ jsonxx::Object *Load(const string &fileName) {
   return object;
 }
 
-void Save(const string &fileName, const jsonxx::Object &object) {
+void SaveToFile(const string &fileName, const jsonxx::Object &object) {
   spdlog::info("*** Save {}", fileName);
   fstream file;
   file.open(fileName, ios::out);
@@ -81,4 +81,4 @@ void Save(const string &fileName, const jsonxx::Object &object) {
   file << str;
   file.close();
 }
-} // namespace JSON
+} // namespace json

@@ -16,7 +16,7 @@ string Parameter::GetFileName() const {
 }
 
 bool Parameter::LoadFromFile() {
-  unique_ptr<jsonxx::Object> object(JSON::Load(GetFileName()));
+  unique_ptr<jsonxx::Object> object(json::LoadFromFile(GetFileName()));
   if (!object)
     return false;
   LoadFromObject(*object, this);
@@ -26,7 +26,7 @@ bool Parameter::LoadFromFile() {
 void Parameter::SaveToFile() {
   jsonxx::Object object;
   SaveToObject(object, this);
-  JSON::Save(GetFileName(), object);
+  json::SaveToFile(GetFileName(), object);
 }
 
 void Parameter::HandleChildren(Parameter *parameter, const Type filterType) {
