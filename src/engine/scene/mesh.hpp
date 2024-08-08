@@ -6,8 +6,8 @@
 
 struct Mesh {
   Material *material = nullptr;
-  GL::VAO vao;
-  GL::VBO vbo;
+  gl::VAO vao;
+  gl::VBO vbo;
 
   bool Init(const aiMesh *mesh);
   void Render(const bool transparent, const Camera &camera,

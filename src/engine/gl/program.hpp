@@ -5,7 +5,7 @@
 
 using namespace std;
 
-namespace GL {
+namespace gl {
 
 class Program {
 private:

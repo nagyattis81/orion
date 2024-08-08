@@ -5,7 +5,7 @@
 
 using namespace glm;
 
-namespace GL {
+namespace gl {
 
 class Texture2D {
 private:

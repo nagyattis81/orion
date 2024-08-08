@@ -1,6 +1,6 @@
 #include "buffers.hpp"
 
-namespace GL {
+namespace gl {
 
 Buffers::Buffers(const GLenum target) : target(target) {}
 
@@ -19,4 +19,4 @@ void Buffers::Bind() const { glBindBuffer(target, id); }
 
 void Buffers::UnBind() const { glBindBuffer(target, GL_NONE); }
 
-} // namespace GL
+} // namespace gl

@@ -3,7 +3,7 @@
 #include "program.hpp"
 #include "shader.hpp"
 
-namespace GL {
+namespace gl {
 
 Program::~Program() {
   if (id == GL_NONE)

@@ -12,20 +12,20 @@ struct Camera;
 
 class Sprite {
 private:
-  GL::Texture2D texture;
-  GL::Program program;
+  gl::Texture2D texture;
+  gl::Program program;
   GLint modelViewLocation = -1;
   GLint projectionLocation = -1;
   GLint colorLocation = -1;
-  GL::VAO vao;
-  GL::VBO vbo;
+  gl::VAO vao;
+  gl::VBO vbo;
 
-  bool InitTexture(const GL::Texture2D::Parameters &parameters);
+  bool InitTexture(const gl::Texture2D::Parameters &parameters);
   bool InitProgram();
   bool InitVAO();
 
 public:
-  bool Load(const GL::Texture2D::Parameters &parameters);
+  bool Load(const gl::Texture2D::Parameters &parameters);
   void Render(const Camera &camera, const mat4 &modelMatrix,
               const vec4 &color) const;
 };

@@ -2,7 +2,7 @@
 
 #include "vao.hpp"
 
-namespace GL {
+namespace gl {
 
 VAO::~VAO() {
   if (id != GL_NONE)

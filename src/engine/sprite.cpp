@@ -5,7 +5,7 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
-bool Sprite::InitTexture(const GL::Texture2D::Parameters &parameters) {
+bool Sprite::InitTexture(const gl::Texture2D::Parameters &parameters) {
   return texture.Load(parameters);
 }
 
@@ -60,7 +60,7 @@ bool Sprite::InitVAO() {
   return vao.Create(creator);
 }
 
-bool Sprite::Load(const GL::Texture2D::Parameters &parameters) {
+bool Sprite::Load(const gl::Texture2D::Parameters &parameters) {
   spdlog::info("Sprite load {}", parameters.fileName);
   if (!InitTexture(parameters))
     return false;

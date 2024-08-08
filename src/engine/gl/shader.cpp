@@ -6,7 +6,7 @@
 
 using namespace std;
 
-namespace GL {
+namespace gl {
 
 Shader::~Shader() {
   if (id == GL_NONE)

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace GL {
+namespace gl {
 class Program;
 }
 
@@ -24,13 +24,13 @@ struct Material::Data {
 
   MaterialTextures materialTextures = {
       new MaterialTexture(
-          {0, aiTextureType_AMBIENT, "ambient", GL::Texture2D::BLACK}),
+          {0, aiTextureType_AMBIENT, "ambient", gl::Texture2D::BLACK}),
       new MaterialTexture(
-          {1, aiTextureType_DIFFUSE, "diffuse", GL::Texture2D::WHITE}),
+          {1, aiTextureType_DIFFUSE, "diffuse", gl::Texture2D::WHITE}),
   };
 
   bool Load(const Parameters &parameters);
-  bool Init(GL::Program &program);
+  bool Init(gl::Program &program);
   void Bind() const;
   void UnBind() const;
 };
