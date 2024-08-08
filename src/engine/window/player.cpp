@@ -1,7 +1,7 @@
 #include "spdlog/spdlog.h"
 
-#include "../../demo.hpp"
-#include "../../engine/music.hpp"
+#include "src/demo.hpp"
+#include "src/engine/music.hpp"
 
 #include "player.hpp"
 

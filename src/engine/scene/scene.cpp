@@ -1,7 +1,7 @@
 #include "spdlog/spdlog.h"
 
-#include "./../camera.hpp"
 #include "scene.hpp"
+#include "src/engine/camera.hpp"
 
 Scene::Scene() {
   // TODO add params (tabs)

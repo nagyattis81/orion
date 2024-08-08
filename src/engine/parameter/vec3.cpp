@@ -1,5 +1,5 @@
 #include "vec3.hpp"
-#include "../json.hpp"
+#include "src/engine/json/json.hpp"
 #include <imgui.h>
 
 void Vec3::GUI() { ImGui::DragFloat3(name.c_str(), &value->x); }

@@ -1,5 +1,5 @@
 #include "color3.hpp"
-#include "../json.hpp"
+#include "src/engine/json/json.hpp"
 #include <imgui.h>
 
 void Color3::GUI() { ImGui::ColorEdit3(name.c_str(), &value->r); }

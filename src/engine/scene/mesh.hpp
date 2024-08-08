@@ -1,8 +1,8 @@
 #pragma once
 
-#include "./../gl/buffers.hpp"
-#include "./../gl/vao.hpp"
 #include "material/material.hpp"
+#include "src/engine/gl/buffers.hpp"
+#include "src/engine/gl/vao.hpp"
 
 struct Mesh {
   Material *material = nullptr;

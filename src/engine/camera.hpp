@@ -1,8 +1,8 @@
 #pragma once
 
-#include "./../demo.hpp"
 #include "constants/geometry.hpp"
 #include "parameter/parameter.hpp"
+#include "src/demo.hpp"
 #include <glad/glad.h>
 #include <glm/mat4x4.hpp>
 

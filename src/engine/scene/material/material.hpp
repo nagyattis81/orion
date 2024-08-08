@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-#include "./../../gl/texture2d.hpp"
+#include "src/engine/gl/texture2d.hpp"
 #include <assimp/scene.h>
 #include <glm/mat4x4.hpp>
 #include <glm/vec4.hpp>

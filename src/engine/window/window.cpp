@@ -1,11 +1,11 @@
 #include "spdlog/spdlog.h"
 #include <glad/glad.h>
 
-#include "./../music.hpp"
+#include "src/engine/music.hpp"
 #include "window.hpp"
 #include <GLFW/glfw3.h>
 
-#include "../../demo.hpp"
+#include "src/demo.hpp"
 
 Window::~Window() {
   if (window)

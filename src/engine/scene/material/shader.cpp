@@ -1,6 +1,6 @@
 #include "shader.hpp"
-#include "./../../camera.hpp"
 #include "data.hpp"
+#include "src/engine/camera.hpp"
 
 bool Material::Shader::Load() {
   if (!program.Load("data/shaders/material.vert", "data/shaders/material.frag"))

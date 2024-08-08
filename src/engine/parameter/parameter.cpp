@@ -1,9 +1,9 @@
 #include "parameter.hpp"
-#include "./../json.hpp"
 #include "color3.hpp"
 #include "constants.hpp"
 #include "float.hpp"
 #include "spdlog/spdlog.h"
+#include "src/engine/json/json.hpp"
 #include "vec3.hpp"
 #include <filesystem>
 #include <fstream>

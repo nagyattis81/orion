@@ -1,11 +1,11 @@
 #include "spdlog/spdlog.h"
+#include <glad/glad.h>
 
-#include "../../demo.hpp"
-
-#include "../../engine/json.hpp"
-#include "../../engine/music.hpp"
-#include "../gui/gui.hpp"
 #include "editor.hpp"
+#include "src/demo.hpp"
+#include "src/engine//music.hpp"
+#include "src/engine/gui/gui.hpp"
+#include "src/engine/json/json.hpp"
 #include <jsonxx.h>
 #include <memory>
 
@@ -31,7 +31,7 @@ bool Editor::Init() {
 
   gui = GUI::Instance(window);
 
-  return gui && gui->Init();
+  return gui && gui->Init(settings.scale);
 }
 
 void Editor::Start() {
@@ -42,7 +42,6 @@ void Editor::Start() {
     SwapBuffers();
   }
   demo->Save();
-  gui->Save();
   Save();
 }
 

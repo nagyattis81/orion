@@ -1,7 +1,7 @@
 #pragma once
 
-#include "./../../gl/program.hpp"
 #include "material.hpp"
+#include "src/engine/gl/program.hpp"
 
 struct Material::Shader {
   Program program;

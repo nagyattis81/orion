@@ -1,9 +1,8 @@
 #include "gui.hpp"
-#include "./../../demo.hpp"
-#include "./../json.hpp"
+#include "src/demo.hpp"
+#include "src/engine/json/json.hpp"
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
-#include <jsonxx.h>
 
 static auto FILE_NAME = "data/gui.json";
 
@@ -17,10 +16,9 @@ GUI *GUI::Instance(GLFWwindow *window) {
 
 GUI::GUI(GLFWwindow *window) : window(window) {}
 
-bool GUI::Init() {
+bool GUI::Init(const float scale) {
   if (!window)
     return false;
-  Load();
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImGuiIO &io = ImGui::GetIO();
@@ -66,18 +64,4 @@ void GUI::Render() {
   Windows();
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-}
-
-void GUI::Load() {
-  unique_ptr<jsonxx::Object> object(JSON::Load(FILE_NAME));
-  if (!object)
-    return;
-  JSON::LoadFloat(*object, "scale", scale);
-}
-
-void GUI::Save() {
-  jsonxx::Object object;
-  ImGuiIO &io = ImGui::GetIO();
-  JSON::SaveFloat(object, "scale", io.FontGlobalScale);
-  JSON::Save(FILE_NAME, object);
 }

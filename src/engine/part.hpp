@@ -1,7 +1,7 @@
 #pragma once
 
-#include "./../demo.hpp"
 #include "parameter/parameter.hpp"
+#include "src/demo.hpp"
 
 struct Part {
   const char *name = nullptr;

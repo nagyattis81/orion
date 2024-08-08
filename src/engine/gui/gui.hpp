@@ -12,18 +12,14 @@ private:
     bool settings = false;
   } show;
 
-  float scale = 1.0f;
-
   GUI(GLFWwindow *window);
 
   void Menu();
   void Windows();
-  void Load();
 
 public:
   static GUI *Instance(GLFWwindow *window);
 
-  bool Init();
+  bool Init(const float scale);
   void Render();
-  void Save();
 };
