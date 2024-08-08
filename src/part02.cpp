@@ -1,9 +1,9 @@
 #include "engine/camera.hpp"
 #include "engine/constants/color.hpp"
 #include "engine/constants/geometry.hpp"
-#include "engine/grid.hpp"
-#include "engine/model.hpp"
 #include "engine/part.hpp"
+#include "engine/renderer/grid.hpp"
+#include "engine/scene/model.hpp"
 #include "engine/scene/scene.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 

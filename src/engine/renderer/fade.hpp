@@ -1,9 +1,9 @@
 #pragma once
 
-#include "animation.hpp"
-#include "gl/buffers.hpp"
-#include "gl/program.hpp"
-#include "gl/vao.hpp"
+#include "src/engine/animation.hpp"
+#include "src/engine/gl/buffers.hpp"
+#include "src/engine/gl/program.hpp"
+#include "src/engine/gl/vao.hpp"
 
 class Fade {
 private:

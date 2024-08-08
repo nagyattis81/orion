@@ -4,7 +4,7 @@
 #include "engine/constants/color.hpp"
 #include "engine/constants/geometry.hpp"
 #include "engine/part.hpp"
-#include "engine/sprite.hpp"
+#include "engine/renderer/sprite.hpp"
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
 

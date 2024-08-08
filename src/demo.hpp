@@ -1,7 +1,7 @@
 #pragma once
 
-#include "engine/fade.hpp"
-#include "engine/sprite.hpp"
+#include "engine/renderer/fade.hpp"
+#include "engine/renderer/sprite.hpp"
 #include <map>
 
 using namespace std;

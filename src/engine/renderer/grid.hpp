@@ -1,10 +1,10 @@
 #pragma once
 
-#include "constants/color.hpp"
-#include "gl/buffers.hpp"
-#include "gl/program.hpp"
-#include "gl/vao.hpp"
-#include "parameter/parameter.hpp"
+#include "src/engine/constants/color.hpp"
+#include "src/engine/gl/buffers.hpp"
+#include "src/engine/gl/program.hpp"
+#include "src/engine/gl/vao.hpp"
+#include "src/engine/parameter/parameter.hpp"
 #include <glm/mat4x4.hpp>
 
 using namespace glm;
