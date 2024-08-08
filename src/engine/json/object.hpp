@@ -11,10 +11,17 @@ class Object;
 
 namespace json {
 
-struct Object {
-  struct Value;
-  map<string, Value *> values;
+class Object {
+public:
+  struct Property;
+
+private:
+  map<string, Property *> properties;
+
+protected:
   void Float(const string &name, float *value);
+
+public:
   void Save(jsonxx::Object &object) const;
   void Load(const jsonxx::Object &object);
 };

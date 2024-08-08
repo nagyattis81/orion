@@ -15,7 +15,7 @@ class Array;
 
 namespace json {
 
-struct Object;
+class Object;
 
 void SaveVec3ToArray(const vec3 &value, jsonxx::Array &array);
 void SaveFloatToArray(const float value, jsonxx::Array &array);
