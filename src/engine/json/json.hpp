@@ -13,17 +13,15 @@ class Array;
 } // namespace jsonxx
 
 namespace json {
-void ivec2ToObject(const ivec2 &value, const string &name,
-                   jsonxx::Object &object);
-void ObjectToivec2(ivec2 &value, const string &name,
-                   const jsonxx::Object &object);
-void vec3ToArray(const vec3 &value, jsonxx::Array &array);
-void ArrayTovec3(vec3 &value, const jsonxx::Array &array);
-void floatToArray(const float value, jsonxx::Array &array);
-void ArrayTofloat(float &value, const jsonxx::Array &array);
-void SaveFloat(jsonxx::Object &object, const string &name, const float value);
-void LoadFloat(const jsonxx::Object &object, const string &name, float &value);
 
-jsonxx::Object *LoadFromFile(const string &fileName);
+void SaveVec3ToArray(const vec3 &value, jsonxx::Array &array);
+void SaveFloatToArray(const float value, jsonxx::Array &array);
+void SaveFloat(jsonxx::Object &object, const string &name, const float value);
 void SaveToFile(const string &fileName, const jsonxx::Object &object);
+
+void LoadArrayFromVec3(vec3 &value, const jsonxx::Array &array);
+void LoadFloatFromfloat(float &value, const jsonxx::Array &array);
+void LoadFloat(const jsonxx::Object &object, const string &name, float &value);
+jsonxx::Object *LoadFromFile(const string &fileName);
+
 } // namespace json
