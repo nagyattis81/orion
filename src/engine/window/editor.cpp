@@ -13,6 +13,12 @@ using namespace std;
 
 static auto FILE_NAME = "data/editor.json";
 
+Editor *Editor::Instance() {
+  if (!instance)
+    instance = new Editor();
+  return instance;
+}
+
 Editor::Editor() {}
 
 bool Editor::Init() {
@@ -49,10 +55,12 @@ bool Editor::Load() {
   unique_ptr<jsonxx::Object> object(json::LoadFromFile(FILE_NAME));
   if (!object)
     return true;
+  json::LoadObject(*object, "settings", settings);
   return true;
 }
 
 void Editor::Save() {
   jsonxx::Object object;
+  json::SaveObject(object, "settings", settings);
   json::SaveToFile(FILE_NAME, object);
 }

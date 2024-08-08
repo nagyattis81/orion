@@ -1,6 +1,7 @@
 #include "spdlog/spdlog.h"
 
 #include "json.hpp"
+#include "object.hpp"
 
 #include <fstream>
 #include <jsonxx.h>
@@ -19,6 +20,13 @@ void SaveFloatToArray(const float value, jsonxx::Array &array) {
 
 void SaveFloat(jsonxx::Object &object, const string &name, const float value) {
   object << name << value;
+}
+
+void SaveObject(jsonxx::Object &object, const string &name,
+                const json::Object &obj) {
+  jsonxx::Object saveObject;
+  obj.Save(saveObject);
+  object << name << saveObject;
 }
 
 void SaveToFile(const string &fileName, const jsonxx::Object &object) {
@@ -53,6 +61,13 @@ void LoadFloat(const jsonxx::Object &object, const string &name, float &value) {
   if (!object.has<jsonxx::Number>(name))
     return;
   value = static_cast<float>(object.get<jsonxx::Number>(name));
+}
+
+void LoadObject(const jsonxx::Object &object, const string &name,
+                json::Object &obj) {
+  if (!object.has<jsonxx::Object>(name))
+    return;
+  obj.Load(object.get<jsonxx::Object>(name));
 }
 
 jsonxx::Object *LoadFromFile(const string &fileName) {

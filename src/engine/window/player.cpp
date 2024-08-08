@@ -19,6 +19,14 @@ static void CallbackKey(GLFWwindow *window, int key, int, int action, int) {
   }
 }
 
+Player *Player::Instance() {
+  if (!instance)
+    instance = new Player();
+  return instance;
+}
+
+Player::Player() {}
+
 bool Player::Init() {
   if (!Create({
           .title = "player",

@@ -23,10 +23,10 @@ bool isEditorMode(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
   Window *window = nullptr;
   if (isEditorMode(argc, argv))
-    window = new Editor();
+    window = Editor::Instance();
   else
-    window = new Player();
-  if (!window->Init())
+    window = Player::Instance();
+  if (!window || !window->Init())
     return EXIT_FAILURE;
   window->Start();
   return EXIT_SUCCESS;
