@@ -6,6 +6,8 @@
 
 using namespace std;
 
+namespace GL {
+
 Shader::~Shader() {
   if (id == GL_NONE)
     return;
@@ -66,3 +68,5 @@ bool Shader::Load(const char *path, const GLenum type) {
 }
 
 void Shader::Attach(const GLuint program) { glAttachShader(program, id); }
+
+}

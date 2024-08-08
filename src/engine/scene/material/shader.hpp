@@ -4,7 +4,7 @@
 #include "src/engine/gl/program.hpp"
 
 struct Material::Shader {
-  Program program;
+  GL::Program program;
   GLint mvpLocation = -1;
   GLint normalMatrixLocation = -1;
   GLint modelViewMatrixLocation = -1;

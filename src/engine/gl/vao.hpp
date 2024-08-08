@@ -5,6 +5,8 @@
 
 using namespace std;
 
+namespace GL {
+
 class VAO {
 private:
   GLuint id = GL_NONE;
@@ -21,3 +23,5 @@ public:
                     const GLboolean normalized, const GLsizei stride,
                     const GLsizei offset);
 };
+
+}

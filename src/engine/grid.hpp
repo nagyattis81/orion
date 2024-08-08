@@ -13,9 +13,9 @@ struct Camera;
 
 class Grid {
 private:
-  Program program;
-  VAO vao;
-  VBO vbo;
+  GL::Program program;
+  GL::VAO vao;
+  GL::VBO vbo;
   GLint mvpLocation = -1;
   bool enable = true;
   Parameter parameter;

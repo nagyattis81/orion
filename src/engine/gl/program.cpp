@@ -3,6 +3,8 @@
 #include "program.hpp"
 #include "shader.hpp"
 
+namespace GL {
+
 Program::~Program() {
   if (id == GL_NONE)
     return;
@@ -59,4 +61,6 @@ bool Program::Location(GLint &location, const char *name) {
     return false;
   }
   return true;
+}
+
 }

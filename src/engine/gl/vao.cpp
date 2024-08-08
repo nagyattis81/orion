@@ -2,6 +2,8 @@
 
 #include "vao.hpp"
 
+namespace GL {
+
 VAO::~VAO() {
   if (id != GL_NONE)
     glDeleteVertexArrays(1, &id);
@@ -53,4 +55,6 @@ void VAO::VertexAttrib(const GLuint index, const GLint size, const GLenum type,
   glVertexAttribPointer(index, size, type, normalized, stride,
                         ((char *)nullptr + (this->offset)));
   glEnableVertexAttribArray(index);
+}
+
 }

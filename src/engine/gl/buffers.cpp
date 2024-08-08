@@ -1,5 +1,7 @@
 #include "buffers.hpp"
 
+namespace GL {
+
 Buffers::Buffers(const GLenum target) : target(target) {}
 
 bool Buffers::Create(GLsizeiptr size, const void *data, GLenum usage) {
@@ -16,3 +18,5 @@ bool Buffers::Create(GLsizeiptr size, const void *data, GLenum usage) {
 void Buffers::Bind() const { glBindBuffer(target, id); }
 
 void Buffers::UnBind() const { glBindBuffer(target, GL_NONE); }
+
+} // namespace GL

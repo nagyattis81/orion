@@ -7,10 +7,10 @@
 
 class Fade {
 private:
-  Program program;
+  GL::Program program;
   GLint alphaLocation = -1;
-  VAO vao;
-  VBO vbo;
+  GL::VAO vao;
+  GL::VBO vbo;
 
 public:
   Animation animation;

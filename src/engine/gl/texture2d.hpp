@@ -5,6 +5,8 @@
 
 using namespace glm;
 
+namespace GL {
+
 class Texture2D {
 private:
   GLuint id = GL_NONE;
@@ -26,3 +28,5 @@ public:
   ivec2 GetSize() const;
   bool Loaded() const;
 };
+
+}

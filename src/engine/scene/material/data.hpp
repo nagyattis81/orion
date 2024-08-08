@@ -7,7 +7,9 @@
 
 using namespace std;
 
+namespace GL {
 class Program;
+}
 
 struct Material::Data {
   typedef vector<MaterialColor *> MaterialColors;
@@ -22,13 +24,13 @@ struct Material::Data {
 
   MaterialTextures materialTextures = {
       new MaterialTexture(
-          {0, aiTextureType_AMBIENT, "ambient", Texture2D::BLACK}),
+          {0, aiTextureType_AMBIENT, "ambient", GL::Texture2D::BLACK}),
       new MaterialTexture(
-          {1, aiTextureType_DIFFUSE, "diffuse", Texture2D::WHITE}),
+          {1, aiTextureType_DIFFUSE, "diffuse", GL::Texture2D::WHITE}),
   };
 
   bool Load(const Parameters &parameters);
-  bool Init(Program &program);
+  bool Init(GL::Program &program);
   void Bind() const;
   void UnBind() const;
 };

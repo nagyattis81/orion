@@ -5,6 +5,8 @@
 
 using namespace std;
 
+namespace GL {
+
 class Program {
 private:
   GLuint id = GL_NONE;
@@ -18,3 +20,5 @@ public:
   void UnBind() const;
   bool Location(GLint &location, const char *name);
 };
+
+}

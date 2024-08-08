@@ -5,6 +5,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+namespace GL {
+
 struct Format {
   GLint internalformat = GL_RGBA8;
   GLenum format = GL_RGBA;
@@ -116,3 +118,5 @@ void Texture2D::UnBind() const {
 ivec2 Texture2D::GetSize() const { return size; }
 
 bool Texture2D::Loaded() const { return loaded; }
+
+}

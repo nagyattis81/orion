@@ -2,6 +2,8 @@
 
 #include <glad/glad.h>
 
+namespace GL {
+
 class Buffers {
 public:
 private:
@@ -26,3 +28,5 @@ class IBO : public Buffers {
 public:
   IBO() : Buffers(GL_ELEMENT_ARRAY_BUFFER) {}
 };
+
+}

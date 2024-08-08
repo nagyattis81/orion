@@ -51,7 +51,7 @@ bool Material::Data::Load(const Parameters &parameters) {
   return true;
 }
 
-bool Material::Data::Init(Program &program) {
+bool Material::Data::Init(GL::Program &program) {
   for (auto it : materialColors) {
     string name = string("uMaterial.") + it->name;
     if (!program.Location(it->location, name.c_str()))

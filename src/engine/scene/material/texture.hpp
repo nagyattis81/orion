@@ -12,8 +12,8 @@ struct MaterialTexture {
   GLuint slot;
   const aiTextureType type;
   const char *name = nullptr;
-  const Texture2D::Type defaultTextureType;
-  Texture2D texture2D;
+  const GL::Texture2D::Type defaultTextureType;
+  GL::Texture2D texture2D;
   GLint location = -1;
 
   static map<aiTextureType, const char *> names;
