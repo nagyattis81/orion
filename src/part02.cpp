@@ -10,9 +10,9 @@
 #include <imgui.h>
 
 struct Part02 : public Part {
-  vec3 clearColor = Color::LIGHTGRAY;
+  vec3 clearColor = constants::Color::LIGHTGRAY;
   float scaleModel = 0.01f;
-  vec3 translateModel = vec3(0.0f);
+  vec3 translateModel = constants::Geometry::ORIGO;
 
   Camera camera;
   Grid grid;
@@ -36,7 +36,7 @@ struct Part02 : public Part {
     return grid.Init({.size = 5000.0f,
                       .count = 400,
                       .normals = false,
-                      .color = Color::WHITE});
+                      .color = constants::Color::WHITE});
   }
 
   void Render(const float globalTime) override {
@@ -48,8 +48,10 @@ struct Part02 : public Part {
     grid.Render(camera);
 
     mat4 m = scale(mat4(1.0f), vec3(scaleModel));
-    m = rotate(m, glm::radians(sinf(globalTime) * 2.0f), vec3(1, 0, 0));
-    m = rotate(m, glm::radians(cosf(globalTime) * 2.0f), vec3(0, 1, 0));
+    m = rotate(m, glm::radians(sinf(globalTime) * 2.0f),
+               constants::Geometry::NORMALX);
+    m = rotate(m, glm::radians(cosf(globalTime) * 2.0f),
+               constants::Geometry::NORMALY);
     m = translate(m,
                   vec3(cosf(globalTime) * 2.0f, 0, sinf(globalTime) * 10.0f));
     m = translate(m, translateModel);

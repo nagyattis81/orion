@@ -23,7 +23,7 @@ struct Part01 : public Part {
   }
 
   void Render(const float globalTime) override {
-    ClearColor(Color::BLACK);
+    ClearColor(constants::Color::BLACK);
     glClear(GL_COLOR_BUFFER_BIT);
 
     // TODO libs word cloud
@@ -33,10 +33,11 @@ struct Part01 : public Part {
 
     static const int NUM_OF_LAYERS = 24;
     for (int i = 0; i < NUM_OF_LAYERS; i++) {
-      mat4 m = Geometry::IDENTITY;
+      mat4 m = constants::Geometry::IDENTITY;
       m = translate(m, CENTER);
       m = scale(m, vec3(1.0f - i * 0.02f));
-      m = rotate(m, sinf(globalTime + i * 0.1f) * 0.5f, Geometry::NORMALZ);
+      m = rotate(m, sinf(globalTime + i * 0.1f) * 0.5f,
+                 constants::Geometry::NORMALZ);
       demo->logo.Render(camera, m, vec4(i / (float)NUM_OF_LAYERS));
     }
   }

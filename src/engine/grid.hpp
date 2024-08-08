@@ -27,7 +27,7 @@ public:
     unsigned int count = 10;
     bool normals = false;
     unsigned int thickening = 5;
-    const vec3 color = Color::GREEN;
+    const vec3 color = constants::Color::GREEN;
   };
   bool Init(const InitParameters &initParameters);
   void Render(const Camera &camera, const mat4 &modelMatrix = mat4(1.0f));

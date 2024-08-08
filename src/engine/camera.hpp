@@ -11,7 +11,7 @@ using namespace glm;
 struct Camera {
   vec3 eye = vec3(5.0f);
   vec3 center = vec3(0.0f);
-  vec3 up = Geometry::NORMALZ;
+  vec3 up = constants::Geometry::NORMALZ;
   float fovy = 60.0f;
   float aspect = Demo::ASPECT;
   float zNear = 0.1f;

@@ -4,6 +4,8 @@
 
 using namespace glm;
 
+namespace constants {
+
 struct Color {
   inline static const vec3 BLACK = vec3(0.0f);
   inline static const vec3 DARKGRAY = vec3(0.25f);
@@ -18,3 +20,5 @@ struct Color {
   inline static const vec3 YELLOW = vec3(1.0f, 1.0f, 0.0f);
   inline static const vec3 WHITE = vec3(1.0f);
 };
+
+}

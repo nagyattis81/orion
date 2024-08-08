@@ -44,16 +44,16 @@ bool Grid::Init(const InitParameters &initParameters) {
     }
 
     const auto Normal = [&](const vec3 &p, const vec3 &color) {
-      Line(Geometry::ORIGO, p, color);
+      Line(constants::Geometry::ORIGO, p, color);
     };
 
     if (initParameters.normals) {
-      Normal(vec3(size, 0.0f, 0.0f), Color::RED);
-      Normal(vec3(0.0f, size, 0.0f), Color::GREEN);
-      Normal(vec3(0.0f, 0.0f, size), Color::BLUE);
-      Normal(vec3(-size, 0.0f, 0.0f), Color::CYAN);
-      Normal(vec3(0.0f, -size, 0.0f), Color::PURPLE);
-      Normal(vec3(0.0f, 0.0f, -size), Color::YELLOW);
+      Normal(vec3(size, 0.0f, 0.0f), constants::Color::RED);
+      Normal(vec3(0.0f, size, 0.0f), constants::Color::GREEN);
+      Normal(vec3(0.0f, 0.0f, size), constants::Color::BLUE);
+      Normal(vec3(-size, 0.0f, 0.0f), constants::Color::CYAN);
+      Normal(vec3(0.0f, -size, 0.0f), constants::Color::PURPLE);
+      Normal(vec3(0.0f, 0.0f, -size), constants::Color::YELLOW);
     }
 
     if (!vbo.Create(sizeof(Vertex) * vertices.size(), &vertices[0].position.x))
