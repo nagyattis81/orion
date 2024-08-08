@@ -119,4 +119,87 @@ ivec2 Texture2D::GetSize() const { return size; }
 
 bool Texture2D::Loaded() const { return loaded; }
 
+void Texture2D::Create(const ivec2 size, const unsigned int filter,
+                       const int internalformat, const unsigned int format,
+                       const unsigned int type, const void *pixels) {
+  if (id != GL_NONE) {
+    glDeleteTextures(1, &id);
+    id = GL_NONE;
+  }
+  glGenTextures(1, &id);
+  glBindTexture(GL_TEXTURE_2D, id);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+  glTexImage2D(GL_TEXTURE_2D, 0, internalformat, size.x, size.y, 0, format,
+               type, pixels);
+  glBindTexture(GL_TEXTURE_2D, GL_NONE);
 }
+
+void Texture2D::SetNearest() const {
+  if (id == GL_NONE)
+    return;
+  glBindTexture(GL_TEXTURE_2D, id);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glBindTexture(GL_TEXTURE_2D, GL_NONE);
+}
+
+void Texture2D::SetLinear() const {
+  if (id == GL_NONE)
+    return;
+  glBindTexture(GL_TEXTURE_2D, id);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glBindTexture(GL_TEXTURE_2D, GL_NONE);
+}
+
+void Texture2D::SetClampToEdge() const {
+  if (id == GL_NONE)
+    return;
+  glBindTexture(GL_TEXTURE_2D, id);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glBindTexture(GL_TEXTURE_2D, GL_NONE);
+}
+
+void Texture2D::SetClampToBorder() const {
+  if (id == GL_NONE)
+    return;
+  glBindTexture(GL_TEXTURE_2D, id);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+  glBindTexture(GL_TEXTURE_2D, GL_NONE);
+}
+
+void Texture2D::SetClampToRepeat() const {
+  if (id == GL_NONE)
+    return;
+  glBindTexture(GL_TEXTURE_2D, id);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glBindTexture(GL_TEXTURE_2D, GL_NONE);
+}
+
+void Texture2D::GenerateMipmap() const {
+  if (id == GL_NONE)
+    return;
+  glBindTexture(GL_TEXTURE_2D, id);
+  glGenerateMipmap(GL_TEXTURE_2D); // Generate mipmaps now!!!
+  glBindTexture(GL_TEXTURE_2D, GL_NONE);
+}
+
+void Texture2D::SetMipmap() const {
+  if (id == GL_NONE)
+    return;
+  glBindTexture(GL_TEXTURE_2D, id);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                  GL_LINEAR_MIPMAP_LINEAR);
+  glBindTexture(GL_TEXTURE_2D, GL_NONE);
+}
+
+void Texture2D::Framebuffer(const GLenum attachment, const GLint level) const {
+  glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_2D, id, level);
+}
+
+} // namespace gl

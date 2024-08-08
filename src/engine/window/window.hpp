@@ -1,5 +1,6 @@
 #pragma once
 
+#include "src/engine/gl/fbo.hpp"
 #include <GLFW/glfw3.h>
 #include <glm/vec2.hpp>
 
@@ -23,6 +24,8 @@ struct CreateParameters {
 
 class Window {
 public:
+  gl::FBO fbo;
+
   ~Window();
 
   bool Create(const CreateParameters &createParameters);
@@ -46,5 +49,4 @@ protected:
   GLFWwindow *window = nullptr;
   Music *music = nullptr;
   Demo *demo = nullptr;
-  // TODO FBO
 };

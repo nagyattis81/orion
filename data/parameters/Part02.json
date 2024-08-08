@@ -46,9 +46,9 @@
 							"eye": {
 								"type": "vec3",
 								"value": [
+									9,
 									5,
-									5,
-									5 
+									4 
 								] 
 							},
 							"up": {
@@ -60,25 +60,25 @@
 								] 
 							} 
 						},
-						"show": false,
+						"show": true,
 						"type": "tab" 
 					} 
 				},
-				"show": false,
+				"show": true,
 				"type": "collapse" 
 			},
 			"clearColor": {
 				"type": "color3",
 				"value": [
-					0.5735294222831726,
-					0.3373702168464661,
-					0.3373702168464661 
+					0.7156862616539001,
+					0.4490580260753632,
+					0.4490580260753632 
 				] 
 			},
 			"scaleModel": {
 				"type": "float",
 				"value": [
-					0.009999999776482582 
+					0.006000000052154064 
 				] 
 			},
 			"translateModel": {
@@ -90,7 +90,7 @@
 				] 
 			} 
 		},
-		"show": false,
+		"show": true,
 		"type": "window" 
 	} 
 } 

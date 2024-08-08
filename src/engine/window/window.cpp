@@ -92,6 +92,9 @@ bool Window::Create(const CreateParameters &createParameters) {
   if (createParameters.samples > 0)
     glEnable(GL_MULTISAMPLE);
 
+  if (!fbo.Create(ivec2(width, height)))
+    return false;
+
   demo = Demo::Instance();
   spdlog::info("!!! Demo init");
   if (!demo->Init())
@@ -128,9 +131,14 @@ void Window::SetWindowTitle(const char *title) {
 }
 
 void Window::Render() {
+  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  fbo.Bind();
   const double time = music->GetTime();
   demo->Render(time);
   demo->End(time);
+  fbo.UnBind();
 }
 
 void Window::MakeContextCurrent() const { glfwMakeContextCurrent(window); }

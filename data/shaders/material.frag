@@ -6,7 +6,7 @@ in vec3 vNormal;
 in vec2 vTextureCoord;
 in vec3 vVertex;
 
-uniform float uAmbientIntensity = 1.0; // TODO from application
+uniform float uAmbientIntensity = 1.0;
 
 struct Material {
     vec3 ambient;
@@ -21,7 +21,7 @@ struct Texture {
 };
 uniform Texture uTexture;
 
-const vec3 uLightSource = vec3(1.0, 0.0, 0.0);  // TODO from application
+const vec3 uLightSource = vec3(1.0, 0.0, 0.0);
 
 vec3 Ambient() {
     return uMaterial.ambient * texture(uTexture.ambient, vTextureCoord).rgb * vec3(uAmbientIntensity);    

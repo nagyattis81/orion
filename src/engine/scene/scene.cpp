@@ -3,9 +3,7 @@
 #include "scene.hpp"
 #include "src/engine/camera.hpp"
 
-Scene::Scene() {
-  // TODO add params (tabs)
-}
+Scene::Scene() {}
 
 bool Scene::InitMaterials(const string &texturePath) {
   for (unsigned int m = 0; m < scene->mNumMaterials; m++) {

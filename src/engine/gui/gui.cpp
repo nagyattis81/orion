@@ -7,6 +7,7 @@
 static auto FILE_NAME = "data/gui.json";
 
 extern void Settings(bool *show);
+extern void Output();
 
 GUI *GUI::Instance(GLFWwindow *window) {
   if (!instance)
@@ -52,7 +53,7 @@ void GUI::Windows() {
     ImGui::ShowDemoWindow(&show.demoWindow);
   if (show.settings)
     Settings(&show.settings);
-
+  Output();
   Demo::Instance()->Windows();
 }
 

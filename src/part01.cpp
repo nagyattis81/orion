@@ -26,8 +26,6 @@ struct Part01 : public Part {
     ClearColor(constants::Color::BLACK);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // TODO libs word cloud
-
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
