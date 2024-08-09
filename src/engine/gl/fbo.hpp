@@ -1,6 +1,5 @@
 #pragma once
 
-#include "texture2d.hpp"
 #include <glad/glad.h>
 #include <glm/vec2.hpp>
 
@@ -11,8 +10,8 @@ namespace gl {
 struct FBO {
   GLuint id = GL_NONE;
   ivec2 size = ivec2(0);
-  Texture2D color;
-  Texture2D depth;
+  GLuint color = GL_NONE;
+  GLuint rbo = GL_NONE;
 
   bool Create(const ivec2 size);
   void Bind() const;

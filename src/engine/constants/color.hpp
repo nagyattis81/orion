@@ -19,6 +19,8 @@ struct Color {
   inline static const vec3 PURPLE = vec3(1.0f, 0.0f, 1.0f);
   inline static const vec3 YELLOW = vec3(1.0f, 1.0f, 0.0f);
   inline static const vec3 WHITE = vec3(1.0f);
+  inline static const vec3 EDITOR_BACKGROUND =
+      vec3(14.0f / 255.0f, 14.0f / 255.0f, 14.0f / 255.0f);
 };
 
-}
+} // namespace constants

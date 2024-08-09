@@ -1,6 +1,7 @@
 #include "spdlog/spdlog.h"
 #include <glad/glad.h>
 
+#include "src/engine/constants/color.hpp"
 #include "src/engine/music.hpp"
 #include "window.hpp"
 #include <GLFW/glfw3.h>
@@ -130,8 +131,9 @@ void Window::SetWindowTitle(const char *title) {
     glfwSetWindowTitle(window, title);
 }
 
-void Window::Render() {
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+void Window::Render() { // TODO virtual + player/editor impl
+  static const auto &color = constants::Color::EDITOR_BACKGROUND;
+  glClearColor(color.r, color.g, color.b, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
   fbo.Bind();
