@@ -32,49 +32,87 @@ static bool FBOValidate(const GLuint id) {
   return true;
 }
 
-bool FBO::Create(const ivec2 size) {
-  if (id != GL_NONE) {
-    glDeleteFramebuffers(1, &id);
-    id = GL_NONE;
+bool FBO::Create(const ivec2 size, const unsigned int samples) {
+  if (fbo != GL_NONE) { // TODO fbo Delete
+    glDeleteFramebuffers(1, &fbo);
+    fbo = GL_NONE;
   }
 
-  glGenFramebuffers(1, &id);
-  if (id == GL_NONE)
+  glGenFramebuffers(1, &fbo);
+  if (fbo == GL_NONE)
     return false;
 
   this->size = size;
 
-  glBindFramebuffer(GL_FRAMEBUFFER, id);
+  glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
   color.Delete();
   color.Create(size, GL_LINEAR, GL_RGB, GL_RGB);
   color.Framebuffer(GL_COLOR_ATTACHMENT0);
 
-  if (rbo != GL_NONE) {
-    glDeleteRenderbuffers(1, &rbo);
-    rbo = GL_NONE;
+  if (depthBuffer != GL_NONE) { // TODO rbo Delete
+    glDeleteRenderbuffers(1, &depthBuffer);
+    depthBuffer = GL_NONE;
   }
-  glGenRenderbuffers(1, &rbo);
-  glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+  glGenRenderbuffers(1, &depthBuffer);
+  glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
   glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, size.x, size.y);
   glBindRenderbuffer(GL_RENDERBUFFER, GL_NONE);
 
   glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
-                            GL_RENDERBUFFER, rbo);
+                            GL_RENDERBUFFER, depthBuffer);
 
   glBindFramebuffer(GL_FRAMEBUFFER, GL_NONE);
 
-  if (!FBOValidate(id))
+  if (!FBOValidate(fbo))
     return false;
+
+  this->samples = samples;
+  if (this->samples == 0)
+    return true;
+
+  // TODO rbo Delete
+  glGenRenderbuffers(1, &colorBuffer);
+  glBindRenderbuffer(GL_RENDERBUFFER, colorBuffer);
+  glRenderbufferStorageMultisample(GL_RENDERBUFFER, this->samples, GL_RGBA8,
+                                   size.x, size.y);
+
+  // TODO rbo Delete
+  glGenRenderbuffers(1, &depthBuffer);
+  glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
+  glRenderbufferStorageMultisample(GL_RENDERBUFFER, this->samples,
+                                   GL_DEPTH_COMPONENT, size.x, size.y);
+
+  // TODO fbo Delete
+  glGenFramebuffers(1, &mfbo);
+  glBindFramebuffer(GL_FRAMEBUFFER, mfbo);
+  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                            GL_RENDERBUFFER, colorBuffer);
+  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                            GL_RENDERBUFFER, depthBuffer);
+  glBindFramebuffer(GL_FRAMEBUFFER, GL_NONE);
 
   return true;
 }
 
-void FBO::Bind() const {
-  glBindFramebuffer(GL_FRAMEBUFFER, id);
+void FBO::Render(function<void(void)> render) const {
+  if (!render)
+    return;
   glViewport(0, 0, size.x, size.y);
+  if (samples == 0) {
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    render();
+  } else {
+    glBindFramebuffer(GL_FRAMEBUFFER, mfbo);
+    render();
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, mfbo);
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
+    glBlitFramebuffer(0, 0, size.x, size.y, 0, 0, size.x, size.y,
+                      GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+  }
+  glBindFramebuffer(GL_FRAMEBUFFER, GL_NONE);
 }
 
-void FBO::UnBind() const { glBindFramebuffer(GL_FRAMEBUFFER, GL_NONE); }
+const Texture2D &FBO::GetColor() const { return color; }
 
 } // namespace gl

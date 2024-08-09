@@ -41,7 +41,7 @@ public:
   void GenerateMipmap() const;
   void SetMipmap() const;
   void Framebuffer(const GLenum attachment, const GLint level = GL_NONE) const;
-  void ImGuiImage(const float x, const float y);
+  void ImGuiImage(const float x, const float y) const;
 };
 
 } // namespace gl

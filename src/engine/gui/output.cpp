@@ -42,7 +42,7 @@ extern void Output() {
 
     ImGui::SetCursorPosX(ImGui::GetCursorPosX() +
                          (ImGui::GetContentRegionAvail().x - x) * 0.5f);
-    fbo.color.ImGuiImage(x, y);
+    fbo.GetColor().ImGuiImage(x, y);
     ImGui::End();
   }
 

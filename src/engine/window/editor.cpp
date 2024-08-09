@@ -57,9 +57,7 @@ void Editor::Render() {
   glClearColor(color.r, color.g, color.b, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
-  fbo.Bind();
-  Window::Render();
-  fbo.UnBind();
+  fbo.Render([=]() { Window::Render(); });
 }
 
 bool Editor::Load() {

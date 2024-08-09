@@ -211,7 +211,7 @@ void Texture2D::Framebuffer(const GLenum attachment, const GLint level) const {
   glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_2D, id, level);
 }
 
-void Texture2D::ImGuiImage(const float x, const float y) {
+void Texture2D::ImGuiImage(const float x, const float y) const {
   ImGui::Image((void *)(intptr_t)id, ImVec2(x, y), ImVec2(0, 1), ImVec2(1, 0));
 }
 

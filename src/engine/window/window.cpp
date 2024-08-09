@@ -51,8 +51,9 @@ bool Window::Create(const CreateParameters &createParameters) {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  // TODO only color buffer
   glfwWindowHint(GLFW_RESIZABLE, createParameters.resize);
-  if (createParameters.samples > 0)
+  if (createParameters.samples > 0) // TODO remove onscreen MSAA support
     glfwWindowHint(GLFW_SAMPLES, createParameters.samples);
   window = glfwCreateWindow(width, height, createParameters.title,
                             createParameters.fullscreen ? monitor : nullptr,
@@ -89,10 +90,11 @@ bool Window::Create(const CreateParameters &createParameters) {
   spdlog::info("GL_RENDERER {0}", (const char *)(glGetString(GL_RENDERER)));
   spdlog::info("GL_VERSION  {0}", (const char *)(glGetString(GL_VERSION)));
 
-  if (createParameters.samples > 0)
+  if (createParameters.samples > 0) // TODO remove onscreen MSAA support
     glEnable(GL_MULTISAMPLE);
 
-  if (!fbo.Create(ivec2(width, height)))
+  if (!fbo.Create(ivec2(width, height),
+                  4)) // TODO app mode support player/editor
     return false;
 
   demo = Demo::Instance();
