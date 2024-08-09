@@ -32,13 +32,13 @@ public:
 
   virtual bool Init() = 0;
   virtual void Start() = 0;
+  virtual void Render();
 
   bool Open() const;
   void SwapBuffers() const;
   void PollEvents() const;
   double GetTime() const;
   void SetWindowTitle(const char *title);
-  void Render();
 
   void MakeContextCurrent() const;
 

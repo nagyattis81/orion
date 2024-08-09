@@ -34,6 +34,7 @@ bool Player::Init() {
           .width = 1280,
           .height = 720,
           .vsync = true,
+          .samples = 4,
           .keyCallback = CallbackKey,
           .resize = false,
       }))

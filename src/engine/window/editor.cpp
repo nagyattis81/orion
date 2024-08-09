@@ -4,6 +4,7 @@
 #include "editor.hpp"
 #include "src/demo.hpp"
 #include "src/engine//music.hpp"
+#include "src/engine/constants/color.hpp"
 #include "src/engine/gui/gui.hpp"
 #include "src/engine/json/json.hpp"
 #include <jsonxx.h>
@@ -49,6 +50,16 @@ void Editor::Start() {
   }
   demo->Save();
   Save();
+}
+
+void Editor::Render() {
+  static const auto &color = constants::Color::EDITOR_BACKGROUND;
+  glClearColor(color.r, color.g, color.b, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  fbo.Bind();
+  Window::Render();
+  fbo.UnBind();
 }
 
 bool Editor::Load() {

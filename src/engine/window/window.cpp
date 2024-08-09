@@ -1,7 +1,6 @@
 #include "spdlog/spdlog.h"
 #include <glad/glad.h>
 
-#include "src/engine/constants/color.hpp"
 #include "src/engine/music.hpp"
 #include "window.hpp"
 #include <GLFW/glfw3.h>
@@ -111,6 +110,12 @@ bool Window::Create(const CreateParameters &createParameters) {
   return true;
 }
 
+void Window::Render() {
+  const double time = music->GetTime();
+  demo->Render(time);
+  demo->End(time);
+}
+
 bool Window::Open() const {
   if (window)
     return !glfwWindowShouldClose(window);
@@ -129,18 +134,6 @@ double Window::GetTime() const { return glfwGetTime(); }
 void Window::SetWindowTitle(const char *title) {
   if (window && title)
     glfwSetWindowTitle(window, title);
-}
-
-void Window::Render() { // TODO virtual + player/editor impl
-  static const auto &color = constants::Color::EDITOR_BACKGROUND;
-  glClearColor(color.r, color.g, color.b, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  fbo.Bind();
-  const double time = music->GetTime();
-  demo->Render(time);
-  demo->End(time);
-  fbo.UnBind();
 }
 
 void Window::MakeContextCurrent() const { glfwMakeContextCurrent(window); }

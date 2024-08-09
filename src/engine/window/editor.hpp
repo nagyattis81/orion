@@ -25,4 +25,5 @@ public:
 
   bool Init() override;
   void Start() override;
+  void Render() override;
 };

@@ -1,6 +1,7 @@
 #include "spdlog/spdlog.h"
 
 #include "texture2d.hpp"
+#include <imgui.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -119,9 +120,17 @@ ivec2 Texture2D::GetSize() const { return size; }
 
 bool Texture2D::Loaded() const { return loaded; }
 
+void Texture2D::Delete() {
+  if (id == GL_NONE)
+    return;
+  glDeleteTextures(1, &id);
+  id = GL_NONE;
+}
+
 void Texture2D::Create(const ivec2 size, const unsigned int filter,
                        const int internalformat, const unsigned int format,
                        const unsigned int type, const void *pixels) {
+  this->size = size;
   if (id != GL_NONE) {
     glDeleteTextures(1, &id);
     id = GL_NONE;
@@ -200,6 +209,10 @@ void Texture2D::SetMipmap() const {
 
 void Texture2D::Framebuffer(const GLenum attachment, const GLint level) const {
   glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_2D, id, level);
+}
+
+void Texture2D::ImGuiImage(const float x, const float y) {
+  ImGui::Image((void *)(intptr_t)id, ImVec2(x, y), ImVec2(0, 1), ImVec2(1, 0));
 }
 
 } // namespace gl

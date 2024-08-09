@@ -46,17 +46,14 @@ bool FBO::Create(const ivec2 size) {
 
   glBindFramebuffer(GL_FRAMEBUFFER, id);
 
-  glGenTextures(1, &color);
-  glBindTexture(GL_TEXTURE_2D, color);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, size.x, size.y, 0, GL_RGB,
-               GL_UNSIGNED_BYTE, NULL);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glBindTexture(GL_TEXTURE_2D, GL_NONE);
+  color.Delete();
+  color.Create(size, GL_LINEAR, GL_RGB, GL_RGB);
+  color.Framebuffer(GL_COLOR_ATTACHMENT0);
 
-  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
-                         color, 0);
-
+  if (rbo != GL_NONE) {
+    glDeleteRenderbuffers(1, &rbo);
+    rbo = GL_NONE;
+  }
   glGenRenderbuffers(1, &rbo);
   glBindRenderbuffer(GL_RENDERBUFFER, rbo);
   glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, size.x, size.y);
