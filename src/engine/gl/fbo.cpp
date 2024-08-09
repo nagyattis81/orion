@@ -32,67 +32,74 @@ static bool FBOValidate(const GLuint id) {
   return true;
 }
 
+static void DeleteFramebuffer(GLuint &id) {
+  if (id == GL_NONE)
+    return;
+  glDeleteFramebuffers(1, &id);
+  id = GL_NONE;
+}
+
+static void CreateFramebuffer(GLuint &id, function<void(void)> setup) {
+  glGenFramebuffers(1, &id);
+  glBindFramebuffer(GL_FRAMEBUFFER, id);
+  setup();
+  glBindFramebuffer(GL_FRAMEBUFFER, GL_NONE);
+}
+
+static void DeleteRenderbuffer(GLuint &id) {
+  if (id == GL_NONE)
+    return;
+  glDeleteRenderbuffers(1, &id);
+  id = GL_NONE;
+}
+
+static void CreateRenderbuffer(GLuint &id, const ivec2 &size,
+                               const GLenum internalformat,
+                               const GLsizei samples = 0) {
+  glGenRenderbuffers(1, &id);
+  glBindRenderbuffer(GL_RENDERBUFFER, id);
+  if (samples > 0)
+    glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, internalformat,
+                                     size.x, size.y);
+  else
+    glRenderbufferStorage(GL_RENDERBUFFER, internalformat, size.x, size.y);
+  glBindRenderbuffer(GL_RENDERBUFFER, GL_NONE);
+}
+
 bool FBO::Create(const ivec2 size, const unsigned int samples) {
-  if (fbo != GL_NONE) { // TODO fbo Delete
-    glDeleteFramebuffers(1, &fbo);
-    fbo = GL_NONE;
-  }
-
-  glGenFramebuffers(1, &fbo);
-  if (fbo == GL_NONE)
-    return false;
-
   this->size = size;
 
-  glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-
-  color.Delete();
-  color.Create(size, GL_LINEAR, GL_RGB, GL_RGB);
-  color.Framebuffer(GL_COLOR_ATTACHMENT0);
-
-  if (depthBuffer != GL_NONE) { // TODO rbo Delete
-    glDeleteRenderbuffers(1, &depthBuffer);
-    depthBuffer = GL_NONE;
-  }
-  glGenRenderbuffers(1, &depthBuffer);
-  glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
-  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, size.x, size.y);
-  glBindRenderbuffer(GL_RENDERBUFFER, GL_NONE);
-
-  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
-                            GL_RENDERBUFFER, depthBuffer);
-
-  glBindFramebuffer(GL_FRAMEBUFFER, GL_NONE);
+  DeleteFramebuffer(fbo);
+  CreateFramebuffer(fbo, [=]() {
+    color.Delete();
+    color.Create(size, GL_LINEAR, GL_RGB, GL_RGB);
+    DeleteRenderbuffer(depthBuffer);
+    CreateRenderbuffer(depthBuffer, size, GL_DEPTH24_STENCIL8);
+    color.Framebuffer(GL_COLOR_ATTACHMENT0);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
+                              GL_RENDERBUFFER, depthBuffer);
+  });
 
   if (!FBOValidate(fbo))
     return false;
 
   this->samples = samples;
-  if (this->samples == 0)
+  if (samples == 0)
     return true;
 
-  // TODO rbo Delete
-  glGenRenderbuffers(1, &colorBuffer);
-  glBindRenderbuffer(GL_RENDERBUFFER, colorBuffer);
-  glRenderbufferStorageMultisample(GL_RENDERBUFFER, this->samples, GL_RGBA8,
-                                   size.x, size.y);
+  DeleteFramebuffer(mfbo);
+  CreateFramebuffer(mfbo, [=]() {
+    DeleteRenderbuffer(colorBuffer);
+    CreateRenderbuffer(colorBuffer, size, GL_RGBA8, samples);
+    DeleteRenderbuffer(depthBuffer);
+    CreateRenderbuffer(depthBuffer, size, GL_DEPTH_COMPONENT, samples);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                              GL_RENDERBUFFER, colorBuffer);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                              GL_RENDERBUFFER, depthBuffer);
+  });
 
-  // TODO rbo Delete
-  glGenRenderbuffers(1, &depthBuffer);
-  glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
-  glRenderbufferStorageMultisample(GL_RENDERBUFFER, this->samples,
-                                   GL_DEPTH_COMPONENT, size.x, size.y);
-
-  // TODO fbo Delete
-  glGenFramebuffers(1, &mfbo);
-  glBindFramebuffer(GL_FRAMEBUFFER, mfbo);
-  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-                            GL_RENDERBUFFER, colorBuffer);
-  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-                            GL_RENDERBUFFER, depthBuffer);
-  glBindFramebuffer(GL_FRAMEBUFFER, GL_NONE);
-
-  return true;
+  return FBOValidate(mfbo);
 }
 
 void FBO::Render(function<void(void)> render) const {
